@@ -3,7 +3,7 @@ title: 我的 Jekyll 網站
 description: "這是我的第一個 Jekyll 網站"
 baseurl: "" # 如果你用 GitHub Pages 子路徑，填 /repo-name
 url: "https://cindragon01.github.io" # 你的 GitHub Pages 網址
-theme: minima
+# theme: minima
 plugins:
   - jekyll-feed
 
