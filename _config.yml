@@ -1,0 +1,11 @@
+# _config.yml
+title: 我的 Jekyll 網站
+description: "這是我的第一個 Jekyll 網站"
+baseurl: "" # 如果你用 GitHub Pages 子路徑，填 /repo-name
+url: "https://cindragon01.github.io" # 你的 GitHub Pages 網址
+theme: minima
+plugins:
+  - jekyll-feed
+
+# 這裡可以設定輸出資料夾，如果 workflow 要改也要改 publish_dir
+destination: _site
