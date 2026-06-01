@@ -1,0 +1,73 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  tags: string[];
+}
+
+const { title, description, pubDate, tags } = Astro.props;
+
+function formatDate(date: Date): string {
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
+---
+<BaseLayout title={`${title} · Jerry Tsai`} description={description}>
+  <nav id="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">Jerry Tsai</a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/blog/">Blog</a></li>
+      </ul>
+      <button class="lang-toggle" id="lang-toggle" aria-label="Switch language">中文</button>
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-nav" id="mobile-nav">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/blog/">Blog</a></li>
+    </ul>
+  </div>
+
+  <section class="sec" style="padding-top: calc(var(--nav-h) + 40px);">
+    <div class="container">
+      <a href="/blog/" class="blog-back" data-i18n="blog.backHome">&larr; Back to Home</a>
+      <article class="blog-post">
+        <header class="blog-post-header">
+          <h1 class="blog-post-title">{title}</h1>
+          <div class="blog-post-meta">
+            <time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
+          </div>
+          {tags.length > 0 && (
+            <div class="blog-card-tags" style="justify-content: center; margin-top: 12px;">
+              {tags.map((tag) => (
+                <span>{tag}</span>
+              ))}
+            </div>
+          )}
+        </header>
+        <div class="blog-post-content">
+          <slot />
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <p>Tsai Chen-Hung &middot; 蔡鎮鴻 &middot; 2025</p>
+      <p class="footer-sub" data-i18n="footer.crafted">Crafted with Astro &amp; TypeScript</p>
+    </div>
+  </footer>
+</BaseLayout>

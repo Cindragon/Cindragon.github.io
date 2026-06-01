@@ -1,0 +1,72 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Footer from '../../components/Footer.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const sortedPosts = allPosts.sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+function formatDate(date: Date): string {
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  });
+}
+---
+<BaseLayout title="Blog · Jerry Tsai" description="Articles and thoughts by Jerry Tsai">
+  <nav id="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">Jerry Tsai</a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/blog/" class="active">Blog</a></li>
+      </ul>
+      <button class="lang-toggle" id="lang-toggle" aria-label="Switch language">中文</button>
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-nav" id="mobile-nav">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/blog/">Blog</a></li>
+    </ul>
+  </div>
+
+  <section class="sec" style="padding-top: calc(var(--nav-h) + 40px); min-height: 70vh;">
+    <div class="container">
+      <div class="sec-head">
+        <h2 data-i18n="blog.allTitle">All Articles</h2>
+        <hr class="hr-small" />
+      </div>
+
+      {sortedPosts.length > 0 ? (
+        <div class="blog-list">
+          {sortedPosts.map((post) => (
+            <div class="blog-list-item">
+              <div class="blog-list-date mono">{formatDate(post.data.pubDate)}</div>
+              <h3 class="blog-list-title">
+                <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+              </h3>
+              <p class="blog-list-desc">{post.data.description}</p>
+              <div class="blog-list-tags">
+                {post.data.tags.map((tag: string) => (
+                  <span>{tag}</span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p class="blog-empty" data-i18n="blog.empty">No articles yet. Stay tuned!</p>
+      )}
+    </div>
+  </section>
+
+  <Footer />
+</BaseLayout>

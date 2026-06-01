@@ -1,0 +1,70 @@
+export const en = {
+  'nav.about': 'About',
+  'nav.experience': 'Experience',
+  'nav.projects': 'Projects',
+  'nav.skills': 'Skills',
+  'nav.blog': 'Blog',
+  'nav.contact': 'Contact',
+
+  'hero.scroll': 'scroll',
+
+  'about.title': 'About',
+  'about.p1': 'From Western Literature to Firmware Engineering — my path is built on the belief that the most capable engineers are shaped by more than just code.',
+  'about.p2': 'I hold a <strong>Master’s in Network Learning Technology</strong> from National Central University, and recently served as a <strong>UEFI Firmware Developer</strong> at Pegatron Corporation — writing, testing, and debugging low-level firmware.',
+  'about.p3': 'Before that, I spent nearly two years managing the Cool English educational platform at NTNU, where our team grew it to <strong>over 1 million registered users</strong>. I also built Python automation tools that cut administrative workload by 80%, turning hours of manual work into one-line commands.',
+  'about.p4': 'Today, I stay sharp through consistent algorithm practice and continue pushing myself to understand systems at their deepest level.',
+  'about.stat.leetcode': 'LeetCode Problems',
+  'about.stat.projects': 'Projects',
+  'about.stat.toeic': 'TOEIC Score',
+  'about.stat.ielts': 'IELTS Band',
+
+  'exp.title': 'Experience & Education',
+  'exp.badge.work': 'Work',
+  'exp.badge.edu': 'Education',
+
+  'exp1.title': 'UEFI Firmware Developer',
+  'exp1.org': 'Pegatron Corporation · Taipei, Taiwan',
+  'exp1.li1': 'Customized and delivered UEFI firmware builds based on customer and platform requirements.',
+  'exp1.li2': 'Modified and maintained UEFI firmware source code for functional adjustments and bug fixes.',
+  'exp1.li3': 'Performed firmware validation via smoke tests and stress tests to ensure system stability.',
+  'exp1.li4': 'Analyzed UEFI logs and test results to identify and resolve firmware-related issues.',
+
+  'exp2.title': 'Project Assistant — Cool English Platform',
+  'exp2.org': 'National Taiwan Normal University (NTNU) · Taipei, Taiwan',
+  'exp2.li1': 'Led team in planning and executing online events and competitions, growing monthly active users by ~5%.',
+  'exp2.li2': 'Organized 5 online competitions attracting 56,000+ participants with 17,000+ award recipients.',
+  'exp2.li3': 'Grew platform to 260,000+ new registrations in two years, reaching 1 million users in 2022.',
+  'exp2.li4': 'Built a Python automation script for data processing, reducing admin workload by 80%.',
+
+  'edu1.title': 'M.S. in Network Learning Technology',
+  'edu1.org': 'National Central University (NCU) · Taoyuan, Taiwan',
+  'edu2.title': 'B.A. in Western Language and Literature',
+  'edu2.org': 'National University of Kaohsiung (NUK) · Kaohsiung, Taiwan',
+
+  'proj.title': 'Projects',
+  'proj1.title': 'LeetCode Practice',
+  'proj1.desc': 'Systematically solving 400+ algorithm problems in C++ and Python. Topics span arrays, binary trees, dynamic programming, sorting, graphs, and more. All solutions are organized and documented on GitHub as a growing reference.',
+  'proj2.title': 'Mini Games Compilation',
+  'proj2.desc': 'A multi-game compilation integrating Snake, Doodle Jump, and Tetris built with C++ OOP and the SFML library. Features scoring, level progression, and a high-score record system. Practiced the full software lifecycle from design through optimization.',
+  'proj3.title': 'Cool English Project',
+  'proj3.desc': 'Led the planning and execution of 5 online English competitions for the Cool English platform, attracting 56,000+ participants. Organized logistics, coordinated with stakeholders, and implemented a Python automation tool that reduced administrative workload by 80%.',
+
+  'skills.title': 'Skills & Certifications',
+  'skills.cat.lang': 'Programming Languages',
+  'skills.cat.systems': 'Systems & Tools',
+  'skills.cat.cert': 'Certificate',
+  'skills.cat.languages': 'Languages',
+
+  'blog.title': 'Latest Articles',
+  'blog.viewAll': 'View All Articles',
+  'blog.readMore': 'Read More',
+  'blog.allTitle': 'All Articles',
+  'blog.backHome': '← Back to Home',
+  'blog.empty': 'No articles yet. Stay tuned!',
+
+  'contact.title': 'Contact',
+  'contact.intro': 'You can contact me at any time!',
+  'contact.btn': 'Start a Conversation',
+
+  'footer.crafted': 'Crafted with Astro & TypeScript',
+} as const;

@@ -1,0 +1,50 @@
+---
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const latestPosts = allPosts
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 4);
+
+function formatDate(date: Date): string {
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  });
+}
+---
+<section id="blog" class="sec">
+  <div class="container">
+    <div class="sec-head reveal">
+      <h2 data-i18n="blog.title">Latest Articles</h2>
+      <hr class="hr-small" />
+    </div>
+
+    {latestPosts.length > 0 ? (
+      <>
+        <div class="blog-preview-grid">
+          {latestPosts.map((post) => (
+            <a href={`/blog/${post.id}/`} class="blog-card reveal">
+              <div class="blog-card-date mono">{formatDate(post.data.pubDate)}</div>
+              <h3 class="blog-card-title">{post.data.title}</h3>
+              <p class="blog-card-desc">{post.data.description}</p>
+              <div class="blog-card-tags">
+                {post.data.tags.map((tag: string) => (
+                  <span>{tag}</span>
+                ))}
+              </div>
+            </a>
+          ))}
+        </div>
+        <div class="blog-view-all reveal">
+          <a href="/blog/" data-i18n="blog.viewAll">View All Articles
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+          </a>
+        </div>
+      </>
+    ) : (
+      <p class="blog-empty reveal" data-i18n="blog.empty">No articles yet. Stay tuned!</p>
+    )}
+  </div>
+</section>
