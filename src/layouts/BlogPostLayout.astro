@@ -1,14 +1,17 @@
 ---
 import BaseLayout from './BaseLayout.astro';
+import ClapButton from '../components/ClapButton.astro';
+import Comment from '../components/Comment.astro';
 
 interface Props {
   title: string;
   description: string;
   pubDate: Date;
   tags: string[];
+  slug: string;
 }
 
-const { title, description, pubDate, tags } = Astro.props;
+const { title, description, pubDate, tags, slug } = Astro.props;
 
 function formatDate(date: Date): string {
   return date.toLocaleDateString('en-US', {
@@ -60,6 +63,8 @@ function formatDate(date: Date): string {
         <div class="blog-post-content">
           <slot />
         </div>
+        <ClapButton slug={slug} />
+        <Comment />
       </article>
     </div>
   </section>

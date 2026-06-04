@@ -1,0 +1,194 @@
+---
+interface Props {
+  slug: string;
+}
+const { slug } = Astro.props;
+---
+
+<div class="clap-container" data-slug={slug}>
+  <button class="clap-btn" aria-label="Clap">
+    <span class="clap-icon">👏</span>
+    <span class="clap-ring"></span>
+  </button>
+  <span class="clap-count">0</span>
+  <div class="clap-float-container"></div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const container = document.querySelector('.clap-container') as HTMLElement;
+    if (!container) return;
+
+    const slug = container.dataset.slug!;
+    const storageKey = `clap-${slug}`;
+    const btn = container.querySelector('.clap-btn') as HTMLButtonElement;
+    const countEl = container.querySelector('.clap-count') as HTMLElement;
+    const floatContainer = container.querySelector('.clap-float-container') as HTMLElement;
+    const MAX_CLAPS = 50;
+
+    let count = parseInt(localStorage.getItem(storageKey) || '0', 10);
+    let pendingFloat = 0;
+    let floatTimer: ReturnType<typeof setTimeout> | null = null;
+
+    countEl.textContent = count > 0 ? `${count}` : '';
+
+    btn.addEventListener('click', () => {
+      if (count >= MAX_CLAPS) {
+        btn.classList.add('clap-shake');
+        setTimeout(() => btn.classList.remove('clap-shake'), 400);
+        return;
+      }
+
+      count++;
+      pendingFloat++;
+      localStorage.setItem(storageKey, String(count));
+      countEl.textContent = `${count}`;
+
+      btn.classList.add('clap-active');
+      setTimeout(() => btn.classList.remove('clap-active'), 300);
+
+      const ring = container.querySelector('.clap-ring') as HTMLElement;
+      ring.classList.remove('clap-ring-anim');
+      void ring.offsetWidth;
+      ring.classList.add('clap-ring-anim');
+
+      if (floatTimer) clearTimeout(floatTimer);
+
+      const existing = floatContainer.querySelector('.clap-float') as HTMLElement;
+      if (existing) {
+        existing.textContent = `+${pendingFloat}`;
+        existing.classList.remove('clap-float-anim');
+        void existing.offsetWidth;
+        existing.classList.add('clap-float-anim');
+      } else {
+        const float = document.createElement('span');
+        float.className = 'clap-float clap-float-anim';
+        float.textContent = `+${pendingFloat}`;
+        floatContainer.appendChild(float);
+      }
+
+      floatTimer = setTimeout(() => {
+        pendingFloat = 0;
+        const el = floatContainer.querySelector('.clap-float');
+        if (el) el.remove();
+      }, 800);
+    });
+  });
+</script>
+
+<style>
+  .clap-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin: 40px 0;
+    position: relative;
+  }
+
+  .clap-btn {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.05);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.15s ease, border-color 0.2s ease, background 0.2s ease;
+  }
+
+  .clap-btn:hover {
+    border-color: rgba(0, 133, 161, 0.5);
+    background: rgba(0, 133, 161, 0.08);
+    transform: scale(1.08);
+  }
+
+  .clap-btn.clap-active {
+    transform: scale(1.2);
+  }
+
+  .clap-icon {
+    font-size: 28px;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  .clap-ring {
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    pointer-events: none;
+  }
+
+  .clap-ring.clap-ring-anim {
+    animation: ring-expand 0.4s ease-out forwards;
+  }
+
+  @keyframes ring-expand {
+    0% {
+      inset: -4px;
+      border-color: rgba(0, 133, 161, 0.6);
+      opacity: 1;
+    }
+    100% {
+      inset: -16px;
+      border-color: rgba(0, 133, 161, 0);
+      opacity: 0;
+    }
+  }
+
+  .clap-count {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+    min-height: 1.2em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .clap-float-container {
+    position: absolute;
+    top: -32px;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
+
+  .clap-float {
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #0085a1;
+    white-space: nowrap;
+  }
+
+  .clap-float.clap-float-anim {
+    animation: float-up 0.8s ease-out forwards;
+  }
+
+  @keyframes float-up {
+    0% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    70% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-40px);
+    }
+  }
+
+  .clap-btn.clap-shake {
+    animation: shake 0.4s ease;
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
+  }
+</style>
