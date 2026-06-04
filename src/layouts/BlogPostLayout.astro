@@ -1,5 +1,6 @@
 ---
 import BaseLayout from './BaseLayout.astro';
+import Comment from '../components/Comment.astro';
 
 interface Props {
   title: string;
@@ -60,6 +61,7 @@ function formatDate(date: Date): string {
         <div class="blog-post-content">
           <slot />
         </div>
+        <Comment />
       </article>
     </div>
   </section>
