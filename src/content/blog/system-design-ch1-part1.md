@@ -2,7 +2,7 @@
 title: "System Design 筆記 — Ch1 Part 1：從零到百萬用戶"
 description: "系統設計面試筆記第一章（上）：探討如何從零開始設計一個為百萬用戶服務的系統，涵蓋資料庫選擇、垂直與水平擴張、負載平衡器、資料庫複製等核心概念。"
 pubDate: 2026-06-01
-tags: ["System Design","系統設計", "Backend", "Database", "Load Balancer"]
+tags: ["System Design", "系統設計", "Backend", "Database", "Load Balancer"]
 ---
 
 系統設計筆記其實是我在看完這本書之後，為了要讓自己不要看過就忘，而打算開始撰寫的筆記，其內容會同步分享在我自己的部落格以及 LinkedIn 上。
@@ -48,10 +48,10 @@ tags: ["System Design","系統設計", "Backend", "Database", "Load Balancer"]
 - **SQL**：以 Tables & Rows 儲存結構化資料，支援透過 SQL 對不同資料表執行 JOIN 操作。常見的有 MySQL、PostgreSQL、Oracle 等。
 
 - **NoSQL**：分為四種類型——key-value stores、graph stores、column stores、document stores，通常不支援 JOIN。當有以下需求時，NoSQL 會是更好的選擇：
-    - 需要超低延遲（super-low latency）
-    - 資料是**非結構化的，或彼此之間沒有關聯性**
-    - 只需要對資料做序列化 / 反序列化（如 JSON、XML、YAML）
-    - 需要儲存海量資料
+  - 需要超低延遲（super-low latency）
+  - 資料是**非結構化的，或彼此之間沒有關聯性**
+  - 只需要對資料做序列化 / 反序列化（如 JSON、XML、YAML）
+  - 需要儲存海量資料
 
 ### 垂直擴張 & 水平擴張
 

@@ -2,8 +2,7 @@
 title: "Hello World — My First Blog Post"
 description: "Welcome to my new personal blog built with Astro. In this post, I share why I decided to start writing and what you can expect."
 pubDate: 2025-06-01
-tags: ["General", "Astro"]
-draft: true
+tags: ["General", "Introduction"]
 ---
 
 ## Why I Started This Blog
@@ -16,10 +15,10 @@ This blog is built with [Astro](https://astro.build), a modern static site gener
 
 I plan to write about:
 
-- **Algorithm & Data Structures** — insights from solving 400+ LeetCode problems
-- **Firmware & Systems** — lessons from working with UEFI firmware
+- **System Design** —My insights from system design patterns
+- **Algorithm & Leetcode Solution** — My LeetCode problem solutions and algorithm organization
 - **Tools & Productivity** — tools and workflows that make me more effective
-- **Career Reflections** — thoughts on transitioning from literature to engineering
+- **More to go**
 
 ## Let's Connect
 
