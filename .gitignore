@@ -1,7 +1,7 @@
 # build output
 dist/
 
-# generated types
+# Astro generated files
 .astro/
 
 # dependencies
@@ -16,9 +16,18 @@ pnpm-debug.log*
 # environment variables
 .env
 .env.production
+.env.local
+.env.*
 
-# macOS-specific files
+# macOS
 .DS_Store
 
-# jetbrains setting folder
+# JetBrains IDE
 .idea/
+
+# Visual Studio
+.vs/
+.vsidx
+
+# Claude Code
+.claude/

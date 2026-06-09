@@ -9,6 +9,8 @@ tags: ["System Design", "系統設計", "Backend", "Database", "Load Balancer"]
 
 希望可以透過我自行整理的筆記重點以及圖表，幫助自己以及其他想要了解系統設計的朋友們更加了解在系統設計時需要考量到什麼事情，以及背後蘊藏的原理為何。
 
+*註：所有文章之圖表架構參考 Alex Xu 著作，個人重新繪製整理。
+
 ## 1. Scale From Zero to Millions of Users - Part 1
 
 由於第一章的內容較多，預計將會分成三個部分進行講解。首先筆者會開始探討如何從零開始設計一個為百萬用戶服務的系統，並針對網站流量設定負載平衡器等相關的系統設定。
@@ -25,13 +27,13 @@ tags: ["System Design", "系統設計", "Backend", "Database", "Load Balancer"]
 4. Web 伺服器將組合好的 HTML / CSS / JS 回傳給用戶端瀏覽畫面。
 
 上述這樣只能算是最簡單的服務，用於讀取靜態網頁或是回傳 API 所提供的 JSON 檔案。
-若是有大量資料需要存取的話，就沒辦法獲取資料了。因此，我們需要透過**資料庫**來讓伺服器回傳我們所儲存的各項資料。
+若需要存取大量的動態資料，單純的靜態伺服器就無法滿足需求了。因此，我們需要透過**資料庫**來讓伺服器回傳我們所儲存的各項資料。
 
 ### 資料庫
 
 當用戶增加後，要把 Web 層和 DB 層**分開到不同伺服器**，這樣兩層才能各自獨立擴張，可以分為以下兩種：
 
-- **Web/Mobile Traffic**：減緩網路流量，避免伺服器無法負荷流量暴增
+- **Web/Mobile Traffic**：分流網路流量，避免伺服器無法負荷流量暴增
 - **Data**：用於儲存數據的資料庫
 
 1. 用戶在瀏覽器輸入網址（如 `www.example.com`），瀏覽器向 DNS 伺服器詢問「這個網址對應哪個 IP？」
@@ -48,10 +50,11 @@ tags: ["System Design", "系統設計", "Backend", "Database", "Load Balancer"]
 - **SQL**：以 Tables & Rows 儲存結構化資料，支援透過 SQL 對不同資料表執行 JOIN 操作。常見的有 MySQL、PostgreSQL、Oracle 等。
 
 - **NoSQL**：分為四種類型——key-value stores、graph stores、column stores、document stores，通常不支援 JOIN。當有以下需求時，NoSQL 會是更好的選擇：
-  - 需要超低延遲（super-low latency）
-  - 資料是**非結構化的，或彼此之間沒有關聯性**
-  - 只需要對資料做序列化 / 反序列化（如 JSON、XML、YAML）
-  - 需要儲存海量資料
+
+- 需要超低延遲（super-low latency）
+- 資料是**非結構化的，或彼此之間沒有關聯性**
+- 只需要對資料做序列化 / 反序列化（如 JSON、XML、YAML）
+- 需要儲存海量資料
 
 ### 垂直擴張 & 水平擴張
 

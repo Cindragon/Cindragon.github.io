@@ -15,6 +15,7 @@
 | [Astro](https://astro.build) 6 | 靜態網站框架，檔案路由、Content Collections |
 | TypeScript | 型別安全的 i18n 系統與腳本 |
 | CSS Custom Properties | 全站主題設計系統（teal accent） |
+| [Giscus](https://giscus.app) | 基於 GitHub Discussions 的留言系統 |
 | Astro Content Collections | Markdown 部落格文章管理，支援 draft 隱藏 |
 | Google Fonts | Open Sans、Noto Sans TC、IBM Plex Mono |
 | Canvas API | 粒子動畫背景 |
@@ -24,13 +25,14 @@
 
 ```
 src/
-├── components/       # 頁面元件（Nav, Hero, About, Experience, Projects, Skills, BlogPreview, Contact, Footer）
+├── components/       # 頁面元件（Nav, Hero, About, Experience, Projects, Skills, BlogPreview, Contact, Footer, ClapButton, Comment）
 ├── content/blog/     # Markdown 部落格文章
 ├── i18n/             # 英文 / 中文翻譯檔
 ├── layouts/          # BaseLayout, BlogPostLayout
 ├── pages/            # 首頁 + Blog 列表頁 + 文章動態路由
 └── styles/           # 全域 CSS
 public/blog/          # 文章圖片
+scripts/              # 自動化腳本（文章上架等）
 ```
 
 ## 指令
@@ -41,8 +43,26 @@ public/blog/          # 文章圖片
 | `npm run dev` | 啟動開發伺服器 `localhost:4321` |
 | `npm run build` | 建置靜態網站到 `./dist/` |
 | `npm run preview` | 本地預覽建置結果 |
+| `npm run publish "<筆記路徑>"` | 自動上架 Obsidian 筆記到 Blog |
 
 ## 新增文章
+
+### 方法一：自動化腳本（推薦）
+
+直接從 Obsidian 筆記一鍵上架：
+
+```bash
+npm run publish "C:\Users\User\Desktop\Jerry\Obsidian 筆記\你的筆記.md"
+```
+
+腳本會自動：
+1. 讀取 Obsidian 筆記內容
+2. 互動式輸入標題、描述、標籤、slug、發布日期
+3. 偵測 `![[image.png]]` 語法，自動複製圖片到 `public/blog/` 並轉換語法
+4. 產生含 frontmatter 的 Astro blog 文章
+5. 可選擇自動建立 git branch、commit、push（配合 branch protection rule 開 PR）
+
+### 方法二：手動建立
 
 在 `src/content/blog/` 建立 `.md` 檔案：
 
@@ -59,3 +79,9 @@ draft: false
 ```
 
 將 `draft` 設為 `true` 可隱藏文章。
+
+## Blog 功能
+
+每篇文章底部包含：
+- **拍手按鈕** — Medium 風格的 clap button，每位訪客最多可拍 50 次（localStorage）
+- **留言區** — 基於 [Giscus](https://giscus.app)，訪客透過 GitHub 帳號留言，資料同步至 GitHub Discussions
