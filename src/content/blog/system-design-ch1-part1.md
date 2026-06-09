@@ -2,7 +2,7 @@
 title: "System Design 筆記 — Ch1 Part 1：從零到百萬用戶"
 description: "系統設計面試筆記第一章（上）：探討如何從零開始設計一個為百萬用戶服務的系統，涵蓋資料庫選擇、垂直與水平擴張、負載平衡器、資料庫複製等核心概念。"
 pubDate: 2026-06-01
-tags: ["System Design","系統設計", "Backend", "Database", "Load Balancer"]
+tags: ["System Design", "系統設計", "Backend", "Database", "Load Balancer"]
 ---
 
 系統設計筆記其實是我在看完這本書之後，為了要讓自己不要看過就忘，而打算開始撰寫的筆記，其內容會同步分享在我自己的部落格以及 LinkedIn 上。
