@@ -906,6 +906,23 @@ strong { font-weight: 700; color: var(--text); }
   font-size: 1.1rem;
 }
 
+.blog-post-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+}
+
+.blog-post-content th,
+.blog-post-content td {
+  border: 1px solid #ccc;
+  padding: 0.75rem;
+}
+
+.blog-post-content th {
+  background: var(--bg-alt);
+  font-weight: 700;
+}
+
 /* CONTACT */
 .contact-wrap {
   text-align: center;
