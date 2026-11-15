@@ -43,7 +43,7 @@ export const en = {
 
   'proj.title': 'Projects',
   'proj1.title': 'LeetCode Portfolio',
-  'proj1.desc': '460 problems solved on LeetCode (Easy 189 / Medium 230 / Hard 41), 368 with documented solutions in the repo, mostly in C++ with Python and SQL. Backed by a four-level pytest suite, including Hypothesis property-based tests, GitHub Actions CI, and an auto-generated stats page.',
+  'proj1.desc': '460 problems solved on LeetCode (Easy 189 / Medium 230 / Hard 41), each with its solution in the repo, mostly in C++ with Python and SQL. Backed by a four-level pytest suite, including Hypothesis property-based tests, GitHub Actions CI, and an auto-generated stats page.',
   'proj2.title': 'Mini Games Compilation',
   'proj2.desc': 'A multi-game compilation integrating Snake, Doodle Jump, and Tetris built with C++ OOP and the SFML library. Features scoring, level progression, and a high-score record system. Practiced the full software lifecycle from design through optimization.',
   'proj3.title': 'Cool English Project',

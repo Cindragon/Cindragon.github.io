@@ -43,7 +43,7 @@ export const zh = {
 
   'proj.title': '專案',
   'proj1.title': 'LeetCode 解題作品集',
-  'proj1.desc': 'LeetCode 已解 460 題（Easy 189 / Medium 230 / Hard 41），其中 368 題的解法整理於 repo，以 C++ 為主，並使用 Python 與 SQL。搭配四個層級的 pytest 測試（含 Hypothesis property-based testing）、GitHub Actions CI，以及自動產生的解題統計頁面。',
+  'proj1.desc': 'LeetCode 已解 460 題（Easy 189 / Medium 230 / Hard 41），每題解法皆整理於 repo，以 C++ 為主，並使用 Python 與 SQL。搭配四個層級的 pytest 測試（含 Hypothesis property-based testing）、GitHub Actions CI，以及自動產生的解題統計頁面。',
   'proj2.title': '小遊戲合集',
   'proj2.desc': '以 C++ 物件導向程式設計與 SFML 函式庫開發，整合貪吃蛇、Doodle Jump 與俄羅斯方塊三款遊戲。具備計分、關卡進度與最高分紀錄系統，完整實踐從設計到優化的軟體開發生命週期。',
   'proj3.title': '酷英語專案',
