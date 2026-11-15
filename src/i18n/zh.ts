@@ -42,8 +42,8 @@ export const zh = {
   'edu2.org': '國立高雄大學 (NUK) · 高雄，台灣',
 
   'proj.title': '專案',
-  'proj1.title': 'LeetCode 演算法練習',
-  'proj1.desc': '系統性地以 C++ 與 Python 解題，累積 400+ 道演算法題目，涵蓋陣列、二元樹、動態規劃、排序、圖等主題。所有解題過程均整理於 GitHub，持續更新作為個人參考資料庫。',
+  'proj1.title': 'LeetCode 解題作品集',
+  'proj1.desc': '已解 366 題（Easy 151 / Medium 184 / Hard 31），以 C++ 為主，並使用 Python 與 SQL。搭配四個層級的 pytest 測試（含 Hypothesis property-based testing）、GitHub Actions CI，以及自動產生的解題統計頁面。',
   'proj2.title': '小遊戲合集',
   'proj2.desc': '以 C++ 物件導向程式設計與 SFML 函式庫開發，整合貪吃蛇、Doodle Jump 與俄羅斯方塊三款遊戲。具備計分、關卡進度與最高分紀錄系統，完整實踐從設計到優化的軟體開發生命週期。',
   'proj3.title': '酷英語專案',

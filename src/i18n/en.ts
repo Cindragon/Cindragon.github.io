@@ -42,8 +42,8 @@ export const en = {
   'edu2.org': 'National University of Kaohsiung (NUK) · Kaohsiung, Taiwan',
 
   'proj.title': 'Projects',
-  'proj1.title': 'LeetCode Practice',
-  'proj1.desc': 'Systematically solving 400+ algorithm problems in C++ and Python. Topics span arrays, binary trees, dynamic programming, sorting, graphs, and more. All solutions are organized and documented on GitHub as a growing reference.',
+  'proj1.title': 'LeetCode Portfolio',
+  'proj1.desc': '366 problems solved (Easy 151 / Medium 184 / Hard 31), mostly in C++ with Python and SQL. Backed by a four-level pytest suite, including Hypothesis property-based tests, GitHub Actions CI, and an auto-generated stats page.',
   'proj2.title': 'Mini Games Compilation',
   'proj2.desc': 'A multi-game compilation integrating Snake, Doodle Jump, and Tetris built with C++ OOP and the SFML library. Features scoring, level progression, and a high-score record system. Practiced the full software lifecycle from design through optimization.',
   'proj3.title': 'Cool English Project',
