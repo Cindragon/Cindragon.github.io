@@ -546,6 +546,7 @@ strong { font-weight: 700; color: var(--text); }
   font-style: italic;
   color: var(--text-light);
 }
+.proj-links { display: flex; gap: 12px; }
 .proj-ext { color: var(--text-xlight); transition: color var(--dur); }
 .proj-ext:hover { color: var(--teal); }
 .proj-ext svg { width: 15px; height: 15px; }
