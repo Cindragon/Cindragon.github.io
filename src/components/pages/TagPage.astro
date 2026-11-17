@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../Nav.astro';
+import Footer from '../Footer.astro';
+import PostList from '../PostList.astro';
+import type { Post } from '../../utils/posts';
+import { useTranslations, localizePath, type Lang } from '../../i18n';
+
+interface Props {
+  lang: Lang;
+  tag: string;
+  posts: Post[];
+}
+
+const { lang, tag, posts } = Astro.props;
+const t = useTranslations(lang);
+const description =
+  lang === 'zh' ? `Jerry Tsai 標籤為「${tag}」的文章` : `Articles tagged “${tag}” by Jerry Tsai`;
+---
+<BaseLayout title={`#${tag} · ${t('nav.blog')} · Jerry Tsai`} description={description} lang={lang}>
+  <Nav lang={lang} variant="page" active="blog" />
+
+  <section class="sec" style="padding-top: calc(var(--nav-h) + 40px); min-height: 70vh;">
+    <div class="container">
+      <a href={localizePath('/blog/', lang)} class="blog-back">{t('blog.backToList')}</a>
+      <div class="sec-head">
+        <h2>{t('blog.tagTitle')} #{tag}</h2>
+        <hr class="hr-small" />
+      </div>
+
+      <PostList posts={posts} lang={lang} />
+    </div>
+  </section>
+
+  <Footer lang={lang} />
+</BaseLayout>

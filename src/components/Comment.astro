@@ -1,11 +1,20 @@
 ---
+import { useTranslations, HTML_LANG, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
 ---
 <section class="giscus-wrapper">
-  <h2 class="comment-title">💬 Comments</h2>
+  <h2 class="comment-title">{t('comment.title')}</h2>
   <div class="giscus"></div>
 </section>
 
 <script
+  is:inline
   src="https://giscus.app/client.js"
   data-repo="Cindragon/Cindragon.github.io"
   data-repo-id="R_kgDOSuDYIw"
@@ -17,7 +26,7 @@
   data-emit-metadata="0"
   data-input-position="bottom"
   data-theme="light"
-  data-lang="zh-TW"
+  data-lang={HTML_LANG[lang] === 'zh-TW' ? 'zh-TW' : 'en'}
   crossorigin="anonymous"
   async
 ></script>

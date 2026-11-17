@@ -1,12 +1,19 @@
 ---
 import { getPublishedPosts, formatDate } from '../utils/posts';
+import { useTranslations, localizePath, type Lang } from '../i18n';
 
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
 const latestPosts = (await getPublishedPosts()).slice(0, 4);
 ---
 <section id="blog" class="sec">
   <div class="container">
     <div class="sec-head reveal">
-      <h2 data-i18n="blog.title">Latest Articles</h2>
+      <h2>{t('blog.title')}</h2>
       <hr class="hr-small" />
     </div>
 
@@ -15,11 +22,11 @@ const latestPosts = (await getPublishedPosts()).slice(0, 4);
         <div class="blog-preview-grid">
           {latestPosts.map((post) => (
             <a href={`/blog/${post.id}/`} class="blog-card reveal">
-              <div class="blog-card-date mono">{formatDate(post.data.pubDate)}</div>
+              <div class="blog-card-date mono">{formatDate(post.data.pubDate, 'short', lang)}</div>
               <h3 class="blog-card-title">{post.data.title}</h3>
               <p class="blog-card-desc">{post.data.description}</p>
               <div class="blog-card-tags">
-                {post.data.tags.map((tag: string) => (
+                {post.data.tags.map((tag) => (
                   <span>{tag}</span>
                 ))}
               </div>
@@ -27,13 +34,13 @@ const latestPosts = (await getPublishedPosts()).slice(0, 4);
           ))}
         </div>
         <div class="blog-view-all reveal">
-          <a href="/blog/" data-i18n="blog.viewAll">View All Articles
+          <a href={localizePath('/blog/', lang)}>{t('blog.viewAll')}
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
           </a>
         </div>
       </>
     ) : (
-      <p class="blog-empty reveal" data-i18n="blog.empty">No articles yet. Stay tuned!</p>
+      <p class="blog-empty reveal">{t('blog.empty')}</p>
     )}
   </div>
 </section>

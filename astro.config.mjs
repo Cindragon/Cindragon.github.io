@@ -6,7 +6,15 @@ import rehypeImageSizes from './src/utils/rehype-image-sizes.mjs';
 
 export default defineConfig({
   site: 'https://cindragon.github.io',
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      // 英文頁在根目錄、中文頁在 /zh/；sitemap 會為兩個版本互相標註 hreflang
+      i18n: {
+        defaultLocale: 'en',
+        locales: { en: 'en', zh: 'zh-TW' },
+      },
+    }),
+  ],
   image: {
     // 文章圖片產生多種寬度的 srcset，手機只下載需要的尺寸；不會放大超過原圖
     layout: 'constrained',

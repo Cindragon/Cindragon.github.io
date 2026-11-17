@@ -1,9 +1,16 @@
 ---
+import { useTranslations, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const t = useTranslations(Astro.props.lang);
 const year = new Date().getFullYear();
 ---
 <footer class="footer">
   <div class="container">
     <p>Tsai Chen-Hung &middot; 蔡鎮鴻 &middot; {year}</p>
-    <p class="footer-sub" data-i18n="footer.crafted">Crafted with Astro &amp; TypeScript</p>
+    <p class="footer-sub">{t('footer.crafted')}</p>
   </div>
 </footer>

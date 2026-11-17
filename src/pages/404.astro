@@ -2,9 +2,14 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import { useTranslations } from '../i18n';
+
+// GitHub Pages 只有一個 404.html，所以這頁同時顯示中英文
+const en = useTranslations('en');
+const zh = useTranslations('zh');
 ---
-<BaseLayout title="404 · Jerry Tsai" description="Page not found">
-  <Nav variant="page" />
+<BaseLayout title="404 · Jerry Tsai" description={en('notFound.title')} lang="en" translatable={false}>
+  <Nav lang="en" variant="page" showLangSwitch={false} />
 
   <section class="sec not-found" style="padding-top: calc(var(--nav-h) + 40px); min-height: 70vh;">
     <div class="container">
@@ -12,15 +17,22 @@ import Footer from '../components/Footer.astro';
         <h2>404</h2>
         <hr class="hr-small" />
       </div>
-      <p class="not-found-text" data-i18n="notFound.text">Sorry, this page doesn’t exist or has been moved.</p>
+      <p class="not-found-text">
+        {en('notFound.text')}<br />
+        <span lang="zh-TW">{zh('notFound.text')}</span>
+      </p>
       <div class="blog-view-all">
-        <a href="/blog/" data-i18n="notFound.toBlog">Browse Articles</a>
+        <a href="/blog/">{en('notFound.toBlog')}</a>
       </div>
-      <p class="not-found-home"><a href="/" data-i18n="notFound.toHome">Back to Home</a></p>
+      <p class="not-found-home">
+        <a href="/">{en('notFound.toHome')}</a>
+        &nbsp;·&nbsp;
+        <a href="/zh/" lang="zh-TW">{zh('notFound.toHome')}</a>
+      </p>
     </div>
   </section>
 
-  <Footer />
+  <Footer lang="en" />
 </BaseLayout>
 
 <style>
@@ -28,6 +40,7 @@ import Footer from '../components/Footer.astro';
     text-align: center;
     color: var(--text-light);
     margin-bottom: 32px;
+    line-height: 1.9;
   }
   .not-found-home {
     text-align: center;

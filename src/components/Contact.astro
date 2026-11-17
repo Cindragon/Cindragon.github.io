@@ -1,15 +1,22 @@
 ---
+import { useTranslations, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const t = useTranslations(Astro.props.lang);
 ---
 <section id="contact" class="sec sec-alt">
   <div class="container">
     <div class="sec-head reveal">
-      <h2 data-i18n="contact.title">Contact</h2>
+      <h2 set:html={t('contact.title')}></h2>
       <hr class="hr-small" />
     </div>
     <div class="contact-wrap reveal">
-      <p class="contact-intro" data-i18n="contact.intro">You can contact me at any time!</p>
+      <p class="contact-intro" set:html={t('contact.intro')}></p>
       <a href="mailto:b7258ter@gmail.com" class="contact-btn">
-        <span data-i18n="contact.btn">Start a Conversation</span>
+        <span set:html={t('contact.btn')}></span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
       </a>
       <div class="contact-socials">
