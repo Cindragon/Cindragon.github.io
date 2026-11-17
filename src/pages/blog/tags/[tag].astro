@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Nav from '../../../components/Nav.astro';
+import Footer from '../../../components/Footer.astro';
+import PostList from '../../../components/PostList.astro';
+import { getPublishedPosts, getAllTags, tagToSlug, type Post } from '../../../utils/posts';
+
+export async function getStaticPaths() {
+  const posts = await getPublishedPosts();
+  return getAllTags(posts).map(({ tag, slug }) => ({
+    params: { tag: slug },
+    props: {
+      tag,
+      posts: posts.filter((p) => p.data.tags.some((t) => tagToSlug(t) === slug)),
+    },
+  }));
+}
+
+interface Props {
+  tag: string;
+  posts: Post[];
+}
+
+const { tag, posts } = Astro.props;
+---
+<BaseLayout title={`#${tag} · Blog · Jerry Tsai`} description={`Articles tagged “${tag}” by Jerry Tsai`}>
+  <Nav variant="page" active="blog" />
+
+  <section class="sec" style="padding-top: calc(var(--nav-h) + 40px); min-height: 70vh;">
+    <div class="container">
+      <a href="/blog/" class="blog-back" data-i18n="blog.backToList">&larr; Back to Articles</a>
+      <div class="sec-head">
+        <h2><span data-i18n="blog.tagTitle">Articles tagged</span> #{tag}</h2>
+        <hr class="hr-small" />
+      </div>
+
+      <PostList posts={posts} />
+    </div>
+  </section>
+
+  <Footer />
+</BaseLayout>

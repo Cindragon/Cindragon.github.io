@@ -1,20 +1,36 @@
 ---
+import type { MarkdownHeading } from 'astro';
 import BaseLayout from './BaseLayout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import Comment from '../components/Comment.astro';
-import { formatDate } from '../utils/posts';
+import { formatDate, tagUrl, type SeriesNav } from '../utils/posts';
 
 interface Props {
   title: string;
   description: string;
   pubDate: Date;
+  updatedDate?: Date;
   tags: string[];
+  lang: 'en' | 'zh-TW';
+  readingMinutes: number;
+  headings: MarkdownHeading[];
+  series?: SeriesNav;
 }
 
-const { title, description, pubDate, tags } = Astro.props;
+const { title, description, pubDate, updatedDate, tags, lang, readingMinutes, headings, series } = Astro.props;
+
+// 目錄只列 h2 / h3，標題少於 3 個時不顯示
+const tocHeadings = headings.filter((h) => h.depth === 2 || h.depth === 3);
+const showToc = tocHeadings.length >= 3;
 ---
-<BaseLayout title={`${title} · Jerry Tsai`} description={description}>
+<BaseLayout
+  title={`${title} · Jerry Tsai`}
+  description={description}
+  lang={lang}
+  ogType="article"
+  publishedTime={pubDate}
+>
   <Nav variant="page" active="blog" />
 
   <section class="sec" style="padding-top: calc(var(--nav-h) + 40px);">
@@ -22,21 +38,60 @@ const { title, description, pubDate, tags } = Astro.props;
       <a href="/blog/" class="blog-back" data-i18n="blog.backToList">&larr; Back to Articles</a>
       <article class="blog-post">
         <header class="blog-post-header">
+          {series && (
+            <div class="blog-series-label">{series.name} · {series.index} / {series.total}</div>
+          )}
           <h1 class="blog-post-title">{title}</h1>
           <div class="blog-post-meta">
             <time datetime={pubDate.toISOString()}>{formatDate(pubDate, 'long')}</time>
+            {updatedDate && (
+              <> · Updated <time datetime={updatedDate.toISOString()}>{formatDate(updatedDate, 'long')}</time></>
+            )}
+            {' · '}{readingMinutes} <span data-i18n="blog.minRead">min read</span>
           </div>
           {tags.length > 0 && (
             <div class="blog-card-tags" style="justify-content: center; margin-top: 12px;">
               {tags.map((tag) => (
-                <span>{tag}</span>
+                <a href={tagUrl(tag)}>{tag}</a>
               ))}
             </div>
           )}
         </header>
+
+        {showToc && (
+          <details class="blog-toc" open>
+            <summary data-i18n="blog.toc">Contents</summary>
+            <ol>
+              {tocHeadings.map((h) => (
+                <li class={`toc-depth-${h.depth}`}>
+                  <a href={`#${h.slug}`}>{h.text}</a>
+                </li>
+              ))}
+            </ol>
+          </details>
+        )}
+
         <div class="blog-post-content">
           <slot />
         </div>
+
+        {series && (series.prev || series.next) && (
+          <nav class="blog-series-nav" aria-label={series.name}>
+            {series.prev ? (
+              <a href={`/blog/${series.prev.id}/`} class="blog-series-prev">
+                <span class="blog-series-dir" data-i18n="blog.seriesPrev">← Previous</span>
+                <span class="blog-series-title">{series.prev.data.title}</span>
+              </a>
+            ) : <span />}
+            {series.next && (
+              <a href={`/blog/${series.next.id}/`} class="blog-series-next">
+                <span class="blog-series-dir" data-i18n="blog.seriesNext">Next →</span>
+                <span class="blog-series-title">{series.next.data.title}</span>
+              </a>
+            )}
+          </nav>
+        )}
+
         <Comment />
       </article>
     </div>

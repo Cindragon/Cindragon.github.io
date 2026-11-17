@@ -687,7 +687,8 @@ strong { font-weight: 700; color: var(--text); }
   flex-wrap: wrap;
   gap: 6px;
 }
-.blog-card-tags span {
+.blog-card-tags span,
+.blog-card-tags a {
   font-size: 11px;
   font-weight: 600;
   color: var(--teal);
@@ -765,7 +766,9 @@ strong { font-weight: 700; color: var(--text); }
   flex-wrap: wrap;
   gap: 6px;
 }
-.blog-list-tags span {
+.blog-list-tags span,
+.blog-list-tags a,
+.blog-tag-cloud a {
   font-size: 11px;
   font-weight: 600;
   color: var(--teal);
@@ -773,6 +776,97 @@ strong { font-weight: 700; color: var(--text); }
   background: var(--teal-dim);
   border: 1px solid var(--teal-border);
   border-radius: 2px;
+}
+.blog-list-tags a,
+.blog-card-tags a,
+.blog-tag-cloud a {
+  transition: background var(--dur), color var(--dur);
+}
+.blog-list-tags a:hover,
+.blog-card-tags a:hover,
+.blog-tag-cloud a:hover {
+  background: var(--teal);
+  color: #fff;
+}
+
+/* 文章列表頁的標籤雲 */
+.blog-tag-cloud {
+  max-width: 800px;
+  margin: 0 auto 40px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+.blog-tag-count {
+  opacity: 0.6;
+  font-weight: 400;
+}
+
+/* 系列文章標籤（標題上方） */
+.blog-series-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 10px;
+}
+
+/* 文章目錄 */
+.blog-toc {
+  margin: 0 0 36px;
+  padding: 16px 20px;
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 14px;
+}
+.blog-toc summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--text);
+}
+.blog-toc ol {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+}
+.blog-toc li { margin: 6px 0; line-height: 1.5; }
+.blog-toc li.toc-depth-3 { padding-left: 18px; font-size: 13px; }
+.blog-toc a { color: var(--text-light); transition: color var(--dur); }
+.blog-toc a:hover { color: var(--teal); }
+
+/* 錨點跳轉時不要被固定的導覽列擋住 */
+.blog-post-content h2,
+.blog-post-content h3 {
+  scroll-margin-top: calc(var(--nav-h) + 16px);
+}
+
+/* 系列文章 上一篇／下一篇 */
+.blog-series-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 48px 0 0;
+}
+.blog-series-nav a {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px 18px;
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  color: var(--text);
+  transition: border-color var(--dur), color var(--dur);
+}
+.blog-series-nav a:hover { border-color: var(--teal); color: var(--teal); }
+.blog-series-next { text-align: right; grid-column: 2; }
+.blog-series-dir { font-size: 12px; font-weight: 600; color: var(--text-light); }
+.blog-series-title { font-size: 14px; font-weight: 600; line-height: 1.5; }
+@media (max-width: 600px) {
+  .blog-series-nav { grid-template-columns: 1fr; }
+  .blog-series-next { grid-column: 1; }
 }
 
 .blog-back {

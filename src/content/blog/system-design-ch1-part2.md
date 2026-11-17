@@ -2,6 +2,8 @@
 title: "System Design 筆記 — Ch1 Part 2：快取、CDN 與無狀態架構"
 description: "系統設計面試筆記第一章（中）：深入探討快取機制、內容分散網路（CDN）、無狀態伺服器設計，以及多資料中心架構的核心概念與實務考量。"
 pubDate: 2026-06-04
+series: "System Design 筆記"
+seriesOrder: 2
 tags: ["System Design", "系統設計", "Backend", "Cache", "CDN"]
 ---
 
@@ -43,7 +45,7 @@ CDN 主要是透過分散各州的伺服器，運用離用戶最近的伺服器�
 - 靜態資料不再透過 Web Server ，而是透過 CDN 來提升存取效能。
 - 透過快取減輕資料庫的負擔。
 
-![加入 CDN 與快取的系統架構](/blog/sd-cdn-cache.png)
+![加入 CDN 與快取的系統架構](../../assets/blog/sd-cdn-cache.png)
 
 ### 無狀態伺服器
 
@@ -55,7 +57,7 @@ CDN 主要是透過分散各州的伺服器，運用離用戶最近的伺服器�
 
 至於 Session data 移到**哪裡**？通常會被放在共享資料庫（Shared storage），可以是 Redis 或關聯式資料庫，這樣任何一台伺服器都能讀到同一份 Session。
 
-![無狀態伺服器架構](/blog/sd-stateless-server.png)
+![無狀態伺服器架構](../../assets/blog/sd-stateless-server.png)
 
 一旦網站的線上服務開始走向國際化，為了提升各國的使用者體驗，便需要有多個資料中心來維持服務品質。
 
@@ -66,7 +68,7 @@ CDN 主要是透過分散各州的伺服器，運用離用戶最近的伺服器�
 其優勢在於**故障轉移（Failover）** 功能—— 當某個資料中心完全掛掉時，流量可以自動切換到另一個資料中心，這是多資料中心架構最重要的動機之一。
 在此基礎上再加上自動擴充功能，系統可以根據流量自動增減伺服器數量，搭配 Load Balancer 就能在不停機的情況下彈性擴張。
 
-![地理位置路由的多資料中心架構](/blog/sd-georouted-datacenter.png)
+![地理位置路由的多資料中心架構](../../assets/blog/sd-georouted-datacenter.png)
 
 然而架設多個資料中心也有一些技術挑戰需要克服，例如：
 

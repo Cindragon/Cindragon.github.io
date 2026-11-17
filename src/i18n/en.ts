@@ -66,6 +66,15 @@ export const en = {
   'contact.title': 'Contact',
   'contact.intro': 'You can contact me at any time!',
   'contact.btn': 'Start a Conversation',
+  'blog.minRead': 'min read',
+  'blog.toc': 'Contents',
+  'blog.seriesPrev': '← Previous',
+  'blog.seriesNext': 'Next →',
+  'blog.tagTitle': 'Articles tagged',
+  'blog.allTags': 'All Tags',
+  'notFound.text': 'Sorry, this page doesn’t exist or has been moved.',
+  'notFound.toBlog': 'Browse Articles',
+  'notFound.toHome': 'Back to Home',
 
   'footer.crafted': 'Crafted with Astro & TypeScript',
 } as const;

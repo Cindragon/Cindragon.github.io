@@ -2,6 +2,8 @@
 title: "System Design 筆記 — Ch3：如何開始進行系統設計"
 description: "系統設計面試的四步驟框架：釐清需求與範圍、提出高層次設計、深入細節，最後彙整總結，並附上面試中該做與不該做的事以及時間分配。"
 pubDate: 2026-07-22
+series: "System Design 筆記"
+seriesOrder: 5
 tags: ["System Design", "Interview", "Framework"]
 ---
 ## 3. A Framework for system design interviews 系統設計面試時的框架

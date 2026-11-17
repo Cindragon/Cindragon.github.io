@@ -2,6 +2,8 @@
 title: "System Design 筆記 — Ch1 Part 1：從零到百萬用戶"
 description: "系統設計面試筆記第一章（上）：探討如何從零開始設計一個為百萬用戶服務的系統，涵蓋資料庫選擇、垂直與水平擴張、負載平衡器、資料庫複製等核心概念。"
 pubDate: 2026-06-01
+series: "System Design 筆記"
+seriesOrder: 1
 tags: ["System Design", "系統設計", "Backend", "Database", "Load Balancer"]
 ---
 
@@ -19,7 +21,7 @@ tags: ["System Design", "系統設計", "Backend", "Database", "Load Balancer"]
 
 一開始最簡單的服務通常只會從一臺伺服器開始，其流程大概如下：
 
-![簡單伺服器架構](/blog/sd-simple-server.png)
+![簡單伺服器架構](../../assets/blog/sd-simple-server.png)
 
 1. 用戶在瀏覽器輸入網址（如 `www.example.com`），瀏覽器向 DNS 伺服器詢問「這個網址對應哪個 IP？」
 2. DNS 伺服器回傳 IP 位址（如 `15.125.23.214`）給用戶端，之後的通訊就直接用 IP。
@@ -43,7 +45,7 @@ tags: ["System Design", "系統設計", "Backend", "Database", "Load Balancer"]
 5. 資料庫回傳所需要的資料。
 6. Web 伺服器將需要的資料，包含組合好的網站畫面回傳給用戶端瀏覽畫面。
 
-![伺服器與資料庫架構](/blog/sd-server-with-db.png)
+![伺服器與資料庫架構](../../assets/blog/sd-server-with-db.png)
 
 至於資料庫也有兩種，分別為關聯性資料庫（Relational database / SQL）及非關聯性資料庫（Non-Relational database / NoSQL），使用者可以依據自己需要的服務使用合適的資料庫。
 
@@ -77,7 +79,7 @@ tags: ["System Design", "系統設計", "Backend", "Database", "Load Balancer"]
 
 為了避免內部系統直接暴露於公開網際網路，負載平衡器會透過私有 IP 與各個伺服器進行連結。
 
-![負載平衡器架構](/blog/sd-load-balancer.png)
+![負載平衡器架構](../../assets/blog/sd-load-balancer.png)
 
 ### 資料庫複製
 
@@ -101,6 +103,6 @@ tags: ["System Design", "系統設計", "Backend", "Database", "Load Balancer"]
 
 那在加入主從式架構的系統架構圖可以參考下圖：
 
-![主從式架構](/blog/sd-master-slave.png)
+![主從式架構](../../assets/blog/sd-master-slave.png)
 
 在搞定了資料庫結構之後，接下來我們可以開始探討快取、CDN 等改善網路讀取速度的設計，我們會在第一章的第二部分進行講解。
