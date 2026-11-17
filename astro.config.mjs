@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import { unified } from '@astrojs/markdown-remark';
 import rehypeImageSizes from './src/utils/rehype-image-sizes.mjs';
 
 export default defineConfig({
@@ -12,7 +13,10 @@ export default defineConfig({
     responsiveStyles: true,
   },
   markdown: {
-    rehypePlugins: [rehypeImageSizes],
+    // Astro 7 預設改用 Sätteri；我們需要 rehype 外掛，所以明確使用 unified（remark/rehype）處理器
+    processor: unified({
+      rehypePlugins: [rehypeImageSizes],
+    }),
     shikiConfig: {
       theme: 'github-light',
     },
