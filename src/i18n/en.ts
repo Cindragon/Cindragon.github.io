@@ -3,6 +3,7 @@ export const en = {
   'nav.experience': 'Experience',
   'nav.projects': 'Projects',
   'nav.skills': 'Skills',
+  'nav.home': 'Home',
   'nav.blog': 'Blog',
   'nav.contact': 'Contact',
 
@@ -59,7 +60,7 @@ export const en = {
   'blog.viewAll': 'View All Articles',
   'blog.readMore': 'Read More',
   'blog.allTitle': 'All Articles',
-  'blog.backHome': '← Back to Home',
+  'blog.backToList': '← Back to Articles',
   'blog.empty': 'No articles yet. Stay tuned!',
 
   'contact.title': 'Contact',

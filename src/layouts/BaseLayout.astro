@@ -139,7 +139,8 @@ import '../styles/global.css';
           if (scrollY >= (sec as HTMLElement).offsetTop - 100) current = sec.id;
         });
         navLinks.forEach(a => {
-          a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+          const href = a.getAttribute('href') || '';
+          if (href.startsWith('#')) a.classList.toggle('active', href === '#' + current);
         });
       }
 
