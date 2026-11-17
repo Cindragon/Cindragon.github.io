@@ -1,15 +1,45 @@
 ---
+import type { TranslationKey } from '../i18n/index';
+
+interface Props {
+  /** home：首頁各區塊的錨點；page：其他頁面的 Home / Blog */
+  variant?: 'home' | 'page';
+  /** 目前所在頁面，對應的連結會標示 active */
+  active?: 'blog';
+}
+
+const { variant = 'home', active } = Astro.props;
+
+type NavLink = { href: string; key: TranslationKey; label: string; id?: 'blog' };
+
+const homeLinks: NavLink[] = [
+  { href: '#about', key: 'nav.about', label: 'About' },
+  { href: '#experience', key: 'nav.experience', label: 'Experience' },
+  { href: '#projects', key: 'nav.projects', label: 'Projects' },
+  { href: '#skills', key: 'nav.skills', label: 'Skills' },
+  { href: '#blog', key: 'nav.blog', label: 'Blog' },
+  { href: '#contact', key: 'nav.contact', label: 'Contact' },
+];
+
+const pageLinks: NavLink[] = [
+  { href: '/', key: 'nav.home', label: 'Home' },
+  { href: '/blog/', key: 'nav.blog', label: 'Blog', id: 'blog' },
+];
+
+const links = variant === 'home' ? homeLinks : pageLinks;
+const brandHref = variant === 'home' ? '#hero' : '/';
 ---
 <nav id="nav">
   <div class="nav-inner">
-    <a href="#hero" class="nav-brand">Jerry Tsai</a>
+    <a href={brandHref} class="nav-brand">Jerry Tsai</a>
     <ul class="nav-links" id="nav-links">
-      <li><a href="#about" data-i18n="nav.about">About</a></li>
-      <li><a href="#experience" data-i18n="nav.experience">Experience</a></li>
-      <li><a href="#projects" data-i18n="nav.projects">Projects</a></li>
-      <li><a href="#skills" data-i18n="nav.skills">Skills</a></li>
-      <li><a href="#blog" data-i18n="nav.blog">Blog</a></li>
-      <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+      {links.map((link) => (
+        <li>
+          <a href={link.href} data-i18n={link.key} class:list={{ active: link.id && link.id === active }}>
+            {link.label}
+          </a>
+        </li>
+      ))}
     </ul>
     <button class="lang-toggle" id="lang-toggle" aria-label="Switch language">中文</button>
     <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle menu" aria-expanded="false">
@@ -20,11 +50,8 @@
 
 <div class="mobile-nav" id="mobile-nav">
   <ul>
-    <li><a href="#about" data-i18n="nav.about">About</a></li>
-    <li><a href="#experience" data-i18n="nav.experience">Experience</a></li>
-    <li><a href="#projects" data-i18n="nav.projects">Projects</a></li>
-    <li><a href="#skills" data-i18n="nav.skills">Skills</a></li>
-    <li><a href="#blog" data-i18n="nav.blog">Blog</a></li>
-    <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+    {links.map((link) => (
+      <li><a href={link.href} data-i18n={link.key}>{link.label}</a></li>
+    ))}
   </ul>
 </div>

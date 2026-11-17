@@ -3,6 +3,7 @@ export const zh = {
   'nav.experience': '經歷',
   'nav.projects': '專案',
   'nav.skills': '技能',
+  'nav.home': '首頁',
   'nav.blog': '文章',
   'nav.contact': '聯絡',
 
@@ -59,7 +60,7 @@ export const zh = {
   'blog.viewAll': '查看所有文章',
   'blog.readMore': '閱讀更多',
   'blog.allTitle': '所有文章',
-  'blog.backHome': '← 返回首頁',
+  'blog.backToList': '← 返回文章列表',
   'blog.empty': '尚無文章，敬請期待！',
 
   'contact.title': '聯絡我',
