@@ -75,6 +75,10 @@ export const zh = {
   'notFound.text': '抱歉，這個頁面不存在或已經移動。',
   'notFound.toBlog': '瀏覽文章',
   'notFound.toHome': '返回首頁',
+  'comment.title': '💬 留言',
+  'lang.switch': '切換成英文',
+  'notFound.title': '找不到頁面',
+  'blog.updated': '更新於',
 
   'footer.crafted': '以 Astro & TypeScript 打造',
 } as const;

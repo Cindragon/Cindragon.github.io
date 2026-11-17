@@ -1,22 +1,29 @@
 ---
+import { useTranslations, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const t = useTranslations(Astro.props.lang);
 ---
 <section id="skills" class="sec sec-alt">
   <div class="container">
     <div class="sec-head reveal">
-      <h2 data-i18n="skills.title">Skills &amp; Certifications</h2>
+      <h2 set:html={t('skills.title')}></h2>
       <hr class="hr-small" />
     </div>
     <div class="skills-wrap">
 
       <div class="skill-cat reveal">
-        <h3 data-i18n="skills.cat.lang">Programming Languages</h3>
+        <h3 set:html={t('skills.cat.lang')}></h3>
         <div class="sk-tags">
           <span>C</span><span>C++</span><span>Python</span><span>JavaScript</span><span>SQL</span>
         </div>
       </div>
 
       <div class="skill-cat reveal">
-        <h3 data-i18n="skills.cat.systems">Systems &amp; Tools</h3>
+        <h3 set:html={t('skills.cat.systems')}></h3>
         <div class="sk-tags">
           <span>Linux</span>
           <span>Docker</span>
@@ -29,7 +36,7 @@
       </div>
 
       <div class="skill-cat reveal">
-        <h3 data-i18n="skills.cat.cert">Certificate</h3>
+        <h3 set:html={t('skills.cat.cert')}></h3>
         <div class="sk-tags cert">
           <span>AWS Certified AI Practitioner</span>
           <span>Google Cybersecurity Certificate</span>
@@ -37,7 +44,7 @@
       </div>
 
       <div class="skill-cat reveal">
-        <h3 data-i18n="skills.cat.languages">Languages</h3>
+        <h3 set:html={t('skills.cat.languages')}></h3>
         <div class="sk-tags lang">
           <span>Chinese (Native)</span>
           <span>English — TOEIC 955</span>

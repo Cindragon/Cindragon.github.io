@@ -173,6 +173,10 @@ strong { font-weight: 700; color: var(--text); }
   margin-right: 8px;
   transition: color var(--dur), border-color var(--dur), background var(--dur);
   white-space: nowrap;
+  /* 切換按鈕現在是連結（<a>），保持原本按鈕的外觀 */
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
 }
 .lang-toggle:hover {
   color: var(--teal);

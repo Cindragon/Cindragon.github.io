@@ -5,6 +5,7 @@ import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import Comment from '../components/Comment.astro';
 import { formatDate, tagUrl, type SeriesNav } from '../utils/posts';
+import { useTranslations, localizePath, type Lang } from '../i18n';
 
 interface Props {
   title: string;
@@ -12,7 +13,8 @@ interface Props {
   pubDate: Date;
   updatedDate?: Date;
   tags: string[];
-  lang: 'en' | 'zh-TW';
+  /** 文章語言；介面（導覽列、返回連結、留言區）也跟著用這個語言 */
+  lang: Lang;
   readingMinutes: number;
   headings: MarkdownHeading[];
   series?: SeriesNav;
@@ -21,6 +23,7 @@ interface Props {
 }
 
 const { title, description, pubDate, updatedDate, tags, lang, readingMinutes, headings, series, ogImage } = Astro.props;
+const t = useTranslations(lang);
 
 // 目錄只列 h2 / h3，標題少於 3 個時不顯示
 const tocHeadings = headings.filter((h) => h.depth === 2 || h.depth === 3);
@@ -30,15 +33,16 @@ const showToc = tocHeadings.length >= 3;
   title={`${title} · Jerry Tsai`}
   description={description}
   lang={lang}
+  translatable={false}
   ogType="article"
   publishedTime={pubDate}
   ogImage={ogImage}
 >
-  <Nav variant="page" active="blog" />
+  <Nav lang={lang} variant="page" active="blog" showLangSwitch={false} />
 
   <section class="sec" style="padding-top: calc(var(--nav-h) + 40px);">
     <div class="container">
-      <a href="/blog/" class="blog-back" data-i18n="blog.backToList">&larr; Back to Articles</a>
+      <a href={localizePath('/blog/', lang)} class="blog-back">{t('blog.backToList')}</a>
       <article class="blog-post">
         <header class="blog-post-header">
           {series && (
@@ -46,16 +50,16 @@ const showToc = tocHeadings.length >= 3;
           )}
           <h1 class="blog-post-title">{title}</h1>
           <div class="blog-post-meta">
-            <time datetime={pubDate.toISOString()}>{formatDate(pubDate, 'long')}</time>
+            <time datetime={pubDate.toISOString()}>{formatDate(pubDate, 'long', lang)}</time>
             {updatedDate && (
-              <> · Updated <time datetime={updatedDate.toISOString()}>{formatDate(updatedDate, 'long')}</time></>
+              <> · {t('blog.updated')} <time datetime={updatedDate.toISOString()}>{formatDate(updatedDate, 'long', lang)}</time></>
             )}
-            {' · '}{readingMinutes} <span data-i18n="blog.minRead">min read</span>
+            {' · '}{readingMinutes} {t('blog.minRead')}
           </div>
           {tags.length > 0 && (
             <div class="blog-card-tags" style="justify-content: center; margin-top: 12px;">
               {tags.map((tag) => (
-                <a href={tagUrl(tag)}>{tag}</a>
+                <a href={tagUrl(tag, lang)}>{tag}</a>
               ))}
             </div>
           )}
@@ -63,7 +67,7 @@ const showToc = tocHeadings.length >= 3;
 
         {showToc && (
           <details class="blog-toc" open>
-            <summary data-i18n="blog.toc">Contents</summary>
+            <summary>{t('blog.toc')}</summary>
             <ol>
               {tocHeadings.map((h) => (
                 <li class={`toc-depth-${h.depth}`}>
@@ -82,23 +86,23 @@ const showToc = tocHeadings.length >= 3;
           <nav class="blog-series-nav" aria-label={series.name}>
             {series.prev ? (
               <a href={`/blog/${series.prev.id}/`} class="blog-series-prev">
-                <span class="blog-series-dir" data-i18n="blog.seriesPrev">← Previous</span>
+                <span class="blog-series-dir">{t('blog.seriesPrev')}</span>
                 <span class="blog-series-title">{series.prev.data.title}</span>
               </a>
             ) : <span />}
             {series.next && (
               <a href={`/blog/${series.next.id}/`} class="blog-series-next">
-                <span class="blog-series-dir" data-i18n="blog.seriesNext">Next →</span>
+                <span class="blog-series-dir">{t('blog.seriesNext')}</span>
                 <span class="blog-series-title">{series.next.data.title}</span>
               </a>
             )}
           </nav>
         )}
 
-        <Comment />
+        <Comment lang={lang} />
       </article>
     </div>
   </section>
 
-  <Footer />
+  <Footer lang={lang} />
 </BaseLayout>

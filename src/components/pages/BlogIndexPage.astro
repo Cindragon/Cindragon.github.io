@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../Nav.astro';
+import Footer from '../Footer.astro';
+import PostList from '../PostList.astro';
+import { getPublishedPosts, getAllTags, tagUrl } from '../../utils/posts';
+import { useTranslations, type Lang } from '../../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const posts = await getPublishedPosts();
+const tags = getAllTags(posts);
+const description = lang === 'zh' ? 'Jerry Tsai 的文章與筆記' : 'Articles and thoughts by Jerry Tsai';
+---
+<BaseLayout title={`${t('nav.blog')} · Jerry Tsai`} description={description} lang={lang}>
+  <Nav lang={lang} variant="page" active="blog" />
+
+  <section class="sec" style="padding-top: calc(var(--nav-h) + 40px); min-height: 70vh;">
+    <div class="container">
+      <div class="sec-head">
+        <h2>{t('blog.allTitle')}</h2>
+        <hr class="hr-small" />
+      </div>
+
+      {tags.length > 0 && (
+        <nav class="blog-tag-cloud" aria-label={t('blog.allTags')}>
+          {tags.map(({ tag, count }) => (
+            <a href={tagUrl(tag, lang)}>{tag} <span class="blog-tag-count">{count}</span></a>
+          ))}
+        </nav>
+      )}
+
+      <PostList posts={posts} lang={lang} />
+    </div>
+  </section>
+
+  <Footer lang={lang} />
+</BaseLayout>

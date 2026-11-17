@@ -75,6 +75,10 @@ export const en = {
   'notFound.text': 'Sorry, this page doesn’t exist or has been moved.',
   'notFound.toBlog': 'Browse Articles',
   'notFound.toHome': 'Back to Home',
+  'comment.title': '💬 Comments',
+  'lang.switch': 'Switch to Chinese',
+  'notFound.title': 'Page not found',
+  'blog.updated': 'Updated',
 
   'footer.crafted': 'Crafted with Astro & TypeScript',
 } as const;

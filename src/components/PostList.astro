@@ -1,29 +1,32 @@
 ---
 import { formatDate, tagUrl, type Post } from '../utils/posts';
+import { useTranslations, type Lang } from '../i18n';
 
 interface Props {
   posts: Post[];
+  lang: Lang;
 }
 
-const { posts } = Astro.props;
+const { posts, lang } = Astro.props;
+const t = useTranslations(lang);
 ---
 {posts.length > 0 ? (
   <div class="blog-list">
     {posts.map((post) => (
       <div class="blog-list-item">
-        <div class="blog-list-date mono">{formatDate(post.data.pubDate)}</div>
+        <div class="blog-list-date mono">{formatDate(post.data.pubDate, 'short', lang)}</div>
         <h3 class="blog-list-title">
           <a href={`/blog/${post.id}/`}>{post.data.title}</a>
         </h3>
         <p class="blog-list-desc">{post.data.description}</p>
         <div class="blog-list-tags">
           {post.data.tags.map((tag) => (
-            <a href={tagUrl(tag)}>{tag}</a>
+            <a href={tagUrl(tag, lang)}>{tag}</a>
           ))}
         </div>
       </div>
     ))}
   </div>
 ) : (
-  <p class="blog-empty" data-i18n="blog.empty">No articles yet. Stay tuned!</p>
+  <p class="blog-empty">{t('blog.empty')}</p>
 )}

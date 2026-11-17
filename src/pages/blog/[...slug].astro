@@ -8,6 +8,7 @@ import {
   getSeriesNav,
   type Post,
 } from '../../utils/posts';
+import { langFromContent } from '../../i18n';
 
 export async function getStaticPaths() {
   const posts = await getPublishedPosts();
@@ -31,7 +32,7 @@ const { Content, headings } = await render(post);
   pubDate={post.data.pubDate}
   updatedDate={post.data.updatedDate}
   tags={post.data.tags}
-  lang={getPostLang(post)}
+  lang={langFromContent(getPostLang(post))}
   readingMinutes={getReadingMinutes(post.body)}
   headings={headings}
   series={getSeriesNav(allPosts, post)}

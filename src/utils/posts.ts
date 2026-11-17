@@ -1,4 +1,5 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
+import { localizePath, type Lang } from '../i18n';
 
 export type Post = CollectionEntry<'blog'>;
 
@@ -8,9 +9,15 @@ export async function getPublishedPosts(): Promise<Post[]> {
   return posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 }
 
-/** 例：short → "Jul 22, 2026"、long → "July 22, 2026" */
-export function formatDate(date: Date, month: 'short' | 'long' = 'short'): string {
-  return date.toLocaleDateString('en-US', { year: 'numeric', month, day: 'numeric' });
+/**
+ * 英文：short → "Jul 22, 2026"、long → "July 22, 2026"
+ * 中文：一律 "2026年7月22日"
+ */
+export function formatDate(date: Date, month: 'short' | 'long' = 'short', lang: Lang = 'en'): string {
+  if (lang === 'zh') {
+    return date.toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+  }
+  return date.toLocaleDateString('en-US', { year: 'numeric', month, day: 'numeric', timeZone: 'UTC' });
 }
 
 const CJK = /[㐀-鿿豈-﫿]/g; // 只用於 match / replace
@@ -37,8 +44,8 @@ export function tagToSlug(tag: string): string {
   return tag.trim().toLowerCase().replace(/\s+/g, '-');
 }
 
-export function tagUrl(tag: string): string {
-  return `/blog/tags/${tagToSlug(tag)}/`;
+export function tagUrl(tag: string, lang: Lang = 'en'): string {
+  return localizePath(`/blog/tags/${tagToSlug(tag)}/`, lang);
 }
 
 /** 所有標籤（以 slug 去重），附文章數，依數量排序 */
@@ -76,4 +83,16 @@ export function getSeriesNav(posts: Post[], post: Post): SeriesNav | undefined {
     );
   const i = items.findIndex((p) => p.id === post.id);
   return { name: series, index: i + 1, total: items.length, prev: items[i - 1], next: items[i + 1] };
+}
+
+/** 標籤頁的 getStaticPaths（英文與中文路由共用） */
+export async function getTagStaticPaths() {
+  const posts = await getPublishedPosts();
+  return getAllTags(posts).map(({ tag, slug }) => ({
+    params: { tag: slug },
+    props: {
+      tag,
+      posts: posts.filter((p) => p.data.tags.some((t) => tagToSlug(t) === slug)),
+    },
+  }));
 }
