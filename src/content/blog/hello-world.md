@@ -3,6 +3,7 @@ title: "Hello World — My First Blog Post"
 description: "Welcome to my new personal blog built with Astro. In this post, I share why I decided to start writing and what you can expect."
 pubDate: 2025-06-01
 tags: ["General", "Introduction"]
+draft: true
 ---
 
 ## Why I Started This Blog

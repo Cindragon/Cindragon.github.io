@@ -35,6 +35,7 @@ const { Content, headings } = await render(post);
   readingMinutes={getReadingMinutes(post.body)}
   headings={headings}
   series={getSeriesNav(allPosts, post)}
+  ogImage={`/og/${post.id}.png`}
 >
   <Content />
 </BlogPostLayout>

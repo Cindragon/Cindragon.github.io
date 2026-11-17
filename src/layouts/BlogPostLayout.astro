@@ -16,9 +16,11 @@ interface Props {
   readingMinutes: number;
   headings: MarkdownHeading[];
   series?: SeriesNav;
+  /** 這篇文章的分享預覽圖，例如 /og/system-design-ch3.png */
+  ogImage: string;
 }
 
-const { title, description, pubDate, updatedDate, tags, lang, readingMinutes, headings, series } = Astro.props;
+const { title, description, pubDate, updatedDate, tags, lang, readingMinutes, headings, series, ogImage } = Astro.props;
 
 // 目錄只列 h2 / h3，標題少於 3 個時不顯示
 const tocHeadings = headings.filter((h) => h.depth === 2 || h.depth === 3);
@@ -30,6 +32,7 @@ const showToc = tocHeadings.length >= 3;
   lang={lang}
   ogType="article"
   publishedTime={pubDate}
+  ogImage={ogImage}
 >
   <Nav variant="page" active="blog" />
 
