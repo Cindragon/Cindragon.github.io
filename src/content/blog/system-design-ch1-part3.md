@@ -2,6 +2,8 @@
 title: "System Design 筆記 — Ch1 Part 3：訊息佇列、資料庫擴張與總結"
 description: "系統設計面試筆記第一章（下）：探討訊息佇列的解耦設計、記錄與監控工具、資料庫的垂直與水平擴張（分片），以及百萬用戶系統設計的完整總結。"
 pubDate: 2026-06-07
+series: "System Design 筆記"
+seriesOrder: 3
 tags: ["System Design", "系統設計", "Backend", "Message Queue", "Database Sharding"]
 ---
 
@@ -22,7 +24,7 @@ tags: ["System Design", "系統設計", "Backend", "Message Queue", "Database Sh
 
 透過這種解耦設計，發送方不需要等接收方上線才能傳送訊息，接收方也不需要等發送方在線才能處理。當 Consumer 端處理速度變慢時，Producer 仍可持續送出訊息，兩者互不阻塞，也可以各自獨立擴張。
 
-![訊息佇列架構](/blog/sd-message-queue.png)
+![訊息佇列架構](../../assets/blog/sd-message-queue.png)
 
 ### 使用記錄、指標以及自動化等相關工具（Logging, metrics, automation）
 
@@ -38,7 +40,7 @@ tags: ["System Design", "系統設計", "Backend", "Message Queue", "Database Sh
 
 自動化：在系統架構越來越複雜的同時，如何建立自動化流程就變得相當重要了。例如系統的持續整合就可以設定為一個自動化的流程。不僅能幫助了解問題，更能提升開發者的生產效率。
 
-![加入記錄與監控工具的系統架構](/blog/sd-debug-tools.png)
+![加入記錄與監控工具的系統架構](../../assets/blog/sd-debug-tools.png)
 
 當系統資料越來越多的同時，也是時候該開始擴大資料庫的層級了。
 
@@ -71,7 +73,7 @@ tags: ["System Design", "系統設計", "Backend", "Message Queue", "Database Sh
 
 - 加入新資料庫及去正規化（Join & de-normalization）：一旦資料庫被分片到各個伺服器時，由於分片後無法跨伺服器 JOIN，所以要把常用欄位合併到同一張表，用空間換取查詢速度。
 
-![資料庫分片架構](/blog/sd-sharding-database.png)
+![資料庫分片架構](../../assets/blog/sd-sharding-database.png)
 
 ### 結語
 

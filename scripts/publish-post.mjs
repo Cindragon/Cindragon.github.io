@@ -12,7 +12,7 @@
  *   2. 互動式輸入 title / description / tags / slug / pubDate（description 必填）
  *   3. （可選）從最新的 origin/main 開一個新分支
  *   4. 清理內容：移除開頭重複的 H1 標題、還原被跳脫的標題（\#\# → ##）
- *   5. 把 ![[image.png]] / ![[image.png|300]] 的圖片複製到 public/blog/<slug>/
+ *   5. 把 ![[image.png]] / ![[image.png|300]] 的圖片複製到 src/assets/blog/<slug>/（build 時由 Astro 自動最佳化成 WebP）
  *   6. 寫入 src/content/blog/<slug>.md
  *   7. （可選）commit、push，並用 gh 建立 Pull Request
  */
@@ -27,7 +27,7 @@ import { fileURLToPath } from 'node:url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = resolve(__dirname, '..');
 const BLOG_DIR = join(PROJECT_ROOT, 'src', 'content', 'blog');
-const PUBLIC_BLOG_DIR = join(PROJECT_ROOT, 'public', 'blog');
+const ASSETS_BLOG_DIR = join(PROJECT_ROOT, 'src', 'assets', 'blog');
 const REPO_URL = 'https://github.com/Cindragon/Cindragon.github.io';
 
 // ── helpers ──────────────────────────────────────────────
@@ -207,12 +207,12 @@ async function main() {
   }
 
   // ── 處理圖片 ──────────────────────────────────────────
-  // 支援 ![[image.png]] 與 ![[image.png|300]]；圖片放到 public/blog/<slug>/ 避免不同文章撞名
+  // 支援 ![[image.png]] 與 ![[image.png|300]]；圖片放到 src/assets/blog/<slug>/：避免不同文章撞名，且 build 時會自動最佳化
 
   const imageRegex = /!\[\[([^\]|]+\.(?:png|jpe?g|gif|svg|webp))(?:\|[^\]]*)?\]\]/gi;
   const imageMatches = [...rawContent.matchAll(imageRegex)];
   const imageMap = new Map(); // obsidian name -> web path (null = 找不到)
-  const imageDir = join(PUBLIC_BLOG_DIR, slug);
+  const imageDir = join(ASSETS_BLOG_DIR, slug);
 
   if (imageMatches.length > 0) {
     console.log(`\n🖼️  偵測到 ${imageMatches.length} 張圖片，開始處理...\n`);
@@ -236,10 +236,12 @@ async function main() {
         continue;
       }
 
-      const webPath = `/blog/${slug}/${cleanImageName(obsidianName)}`;
-      await copyFile(srcPath, join(PROJECT_ROOT, 'public', webPath));
+      const fileName = cleanImageName(obsidianName);
+      // 文章在 src/content/blog/，用相對路徑引用 src/assets/blog/<slug>/ 的圖片
+      const webPath = `../../assets/blog/${slug}/${fileName}`;
+      await copyFile(srcPath, join(imageDir, fileName));
       imageMap.set(obsidianName, webPath);
-      console.log(`   ✅ ${obsidianName} → ${webPath}`);
+      console.log(`   ✅ ${obsidianName} → src/assets/blog/${slug}/${fileName}`);
     }
   }
 
@@ -273,7 +275,7 @@ async function main() {
       console.log('\n📦 加入變更...');
       git('add', '--', `src/content/blog/${slug}.md`);
       if ([...imageMap.values()].some(Boolean)) {
-        git('add', '--', `public/blog/${slug}`);
+        git('add', '--', `src/assets/blog/${slug}`);
       }
 
       git('commit', '-m', `Add blog post: ${title}`);

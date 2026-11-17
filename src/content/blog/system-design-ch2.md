@@ -2,6 +2,8 @@
 title: "System Design 筆記 — Ch2：設計系統時如何進行估算"
 description: "系統設計面試筆記第二章：探討如何在設計系統過程中，針對服務流量做出精準的估算"
 pubDate: 2026-06-16
+series: "System Design 筆記"
+seriesOrder: 4
 tags: ["System Design", "Envelope Estimation", "系統設計"]
 ---
 ## 2.  Back of the envelope estimation （粗略估算的定義）

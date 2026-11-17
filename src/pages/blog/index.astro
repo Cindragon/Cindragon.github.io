@@ -2,9 +2,11 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
-import { getPublishedPosts, formatDate } from '../../utils/posts';
+import PostList from '../../components/PostList.astro';
+import { getPublishedPosts, getAllTags, tagUrl } from '../../utils/posts';
 
-const sortedPosts = await getPublishedPosts();
+const posts = await getPublishedPosts();
+const tags = getAllTags(posts);
 ---
 <BaseLayout title="Blog · Jerry Tsai" description="Articles and thoughts by Jerry Tsai">
   <Nav variant="page" active="blog" />
@@ -16,26 +18,15 @@ const sortedPosts = await getPublishedPosts();
         <hr class="hr-small" />
       </div>
 
-      {sortedPosts.length > 0 ? (
-        <div class="blog-list">
-          {sortedPosts.map((post) => (
-            <div class="blog-list-item">
-              <div class="blog-list-date mono">{formatDate(post.data.pubDate)}</div>
-              <h3 class="blog-list-title">
-                <a href={`/blog/${post.id}/`}>{post.data.title}</a>
-              </h3>
-              <p class="blog-list-desc">{post.data.description}</p>
-              <div class="blog-list-tags">
-                {post.data.tags.map((tag: string) => (
-                  <span>{tag}</span>
-                ))}
-              </div>
-            </div>
+      {tags.length > 0 && (
+        <nav class="blog-tag-cloud" aria-label="Tags">
+          {tags.map(({ tag, count }) => (
+            <a href={tagUrl(tag)}>{tag} <span class="blog-tag-count">{count}</span></a>
           ))}
-        </div>
-      ) : (
-        <p class="blog-empty" data-i18n="blog.empty">No articles yet. Stay tuned!</p>
+        </nav>
       )}
+
+      <PostList posts={posts} />
     </div>
   </section>
 

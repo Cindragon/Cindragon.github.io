@@ -66,6 +66,15 @@ export const zh = {
   'contact.title': '聯絡我',
   'contact.intro': '隨時歡迎與我聯繫！',
   'contact.btn': '開始對話',
+  'blog.minRead': '分鐘閱讀',
+  'blog.toc': '目錄',
+  'blog.seriesPrev': '← 上一篇',
+  'blog.seriesNext': '下一篇 →',
+  'blog.tagTitle': '標籤',
+  'blog.allTags': '所有標籤',
+  'notFound.text': '抱歉，這個頁面不存在或已經移動。',
+  'notFound.toBlog': '瀏覽文章',
+  'notFound.toHome': '返回首頁',
 
   'footer.crafted': '以 Astro & TypeScript 打造',
 } as const;
