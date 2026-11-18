@@ -15,6 +15,11 @@ updates:
     open-pull-requests-limit: 5
     commit-message:
       prefix: deps
+    ignore:
+      # @astrojs/check 0.9.x 只支援 TypeScript 5～6（peerDependencies: ^5 || ^6），
+      # 升到 7 會讓 npm ci 失敗。等 @astrojs/check 支援 TypeScript 7 後，刪掉這段即可。
+      - dependency-name: typescript
+        update-types: [version-update:semver-major]
 
   - package-ecosystem: github-actions
     directory: /
