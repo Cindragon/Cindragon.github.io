@@ -1,0 +1,27 @@
+# Dependabot：每週檢查套件更新並自動開 PR，PR 會跑既有的型別檢查、build 與連結檢查。
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: Asia/Taipei
+    # 小版本與修補版本合成一個 PR，避免一次收到一堆 PR；大版本（可能有破壞性變更）各自分開
+    groups:
+      minor-and-patch:
+        update-types: [minor, patch]
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: deps
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      actions:
+        patterns: ["*"]
+    commit-message:
+      prefix: ci

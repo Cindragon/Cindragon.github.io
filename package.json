@@ -9,6 +9,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "check": "astro check",
+    "check:i18n": "node scripts/check-i18n.mjs",
+    "check:links": "node scripts/check-links.mjs",
     "preview": "astro preview",
     "astro": "astro",
     "publish": "node scripts/publish-post.mjs"

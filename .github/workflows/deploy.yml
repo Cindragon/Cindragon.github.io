@@ -28,8 +28,14 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npm run check
-      - run: npm run build
+      - name: Type check
+        run: npm run check
+      - name: Translation keys (en / zh)
+        run: npm run check:i18n
+      - name: Build
+        run: npm run build
+      - name: Internal links
+        run: npm run check:links
       - if: github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v3
         with:
