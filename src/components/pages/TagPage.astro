@@ -20,6 +20,7 @@ const description =
 <BaseLayout title={`#${tag} · ${t('nav.blog')} · Jerry Tsai`} description={description} lang={lang}>
   <Nav lang={lang} variant="page" active="blog" />
 
+  <main id="main">
   <section class="sec" style="padding-top: calc(var(--nav-h) + 40px); min-height: 70vh;">
     <div class="container">
       <a href={localizePath('/blog/', lang)} class="blog-back">{t('blog.backToList')}</a>
@@ -31,6 +32,7 @@ const description =
       <PostList posts={posts} lang={lang} />
     </div>
   </section>
+  </main>
 
   <Footer lang={lang} />
 </BaseLayout>

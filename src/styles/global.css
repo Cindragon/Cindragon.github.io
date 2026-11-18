@@ -8,18 +8,26 @@
   --teal-light:  #00a8cc;
   --teal-dim:    rgba(0, 133, 161, 0.1);
   --teal-border: rgba(0, 133, 161, 0.3);
+  /* 小字用的 teal：在白底與 --teal-dim 底上都達到 4.5:1 對比（WCAG AA） */
+  --teal-text:   #006f87;
   --link:        #008AFF;
   --bg:          #ffffff;
   --bg-nav:      #F5F5F5;
   --bg-alt:      #f8f8f8;
   --bg-card:     #ffffff;
   --text:        #404040;
-  --text-light:  #808080;
+  /* 原本 #808080 在 #f5f5f5 上只有 3.6:1，加深到 4.5:1 以上 */
+  --text-light:  #6b6b6b;
   --text-xlight: #aaaaaa;
   --border:      #EAEAEA;
   --border2:     #dddddd;
   --nav-h:       51px;
-  --font:        'Open Sans', 'Noto Sans TC', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  /*
+   * 中文使用系統內建字體（蘋果：蘋方、Windows：微軟正黑體、Android／Linux：Noto Sans CJK），
+   * 不再下載整套 Noto Sans TC（中文網頁字體會切成大量檔案，每頁約 1MB）。
+   * 只有首頁大標「蔡鎮鴻」用 Noto Sans TC 的三字子集，見 .name-zh 與 BaseLayout 的字體連結。
+   */
+  --font:        'Open Sans', 'PingFang TC', 'Microsoft JhengHei', 'Noto Sans CJK TC', 'Noto Sans TC', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   --font-mono:   'IBM Plex Mono', 'Courier New', monospace;
   --ease:        cubic-bezier(0.4, 0, 0.2, 1);
   --dur:         0.2s;
@@ -273,6 +281,8 @@ strong { font-weight: 700; color: var(--text); }
 }
 
 .name-zh {
+  /* 只有這三個字使用 Noto Sans TC（BaseLayout 以 text= 只下載這三字），其他中文用系統字體 */
+  font-family: 'Noto Sans TC', var(--font);
   display: block;
   font-size: clamp(3rem, 10vw, 6rem);
   color: var(--text);
@@ -1125,4 +1135,22 @@ strong { font-weight: 700; color: var(--text); }
   .timeline { padding-left: 20px; }
   .contact-btn { width: 100%; justify-content: center; }
   .hero-contacts { flex-direction: column; align-items: center; }
+}
+
+/* ── 無障礙：小字的 teal 加深，達到 4.5:1 對比 ─────────────── */
+.blog-card-tags span,
+.blog-card-tags a,
+.blog-list-tags span,
+.blog-list-tags a,
+.blog-tag-cloud a,
+.blog-series-label,
+.sk-tags.cert span {
+  color: var(--teal-text);
+}
+.blog-list-tags a:hover,
+.blog-card-tags a:hover,
+.blog-tag-cloud a:hover,
+/* 原本 .sk-tags.cert span 的顏色寫在 hover 規則之後，滑過時變成 teal 底 teal 字看不見 */
+.sk-tags.cert span:hover {
+  color: #fff;
 }
