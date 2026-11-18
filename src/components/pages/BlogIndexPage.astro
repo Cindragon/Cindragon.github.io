@@ -19,6 +19,7 @@ const description = lang === 'zh' ? 'Jerry Tsai 的文章與筆記' : 'Articles 
 <BaseLayout title={`${t('nav.blog')} · Jerry Tsai`} description={description} lang={lang}>
   <Nav lang={lang} variant="page" active="blog" />
 
+  <main id="main">
   <section class="sec" style="padding-top: calc(var(--nav-h) + 40px); min-height: 70vh;">
     <div class="container">
       <div class="sec-head">
@@ -37,6 +38,7 @@ const description = lang === 'zh' ? 'Jerry Tsai 的文章與筆記' : 'Articles 
       <PostList posts={posts} lang={lang} />
     </div>
   </section>
+  </main>
 
   <Footer lang={lang} />
 </BaseLayout>

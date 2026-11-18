@@ -64,7 +64,7 @@ const switchHref = localizePath(stripLangPrefix(Astro.url.pathname), otherLang);
         href={switchHref}
         hreflang={HTML_LANG[otherLang]}
         lang={HTML_LANG[otherLang]}
-        aria-label={t('lang.switch')}
+        aria-label={`${LANG_LABEL[otherLang]} – ${t('lang.switch')}`}
       >{LANG_LABEL[otherLang]}</a>
     )}
     <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle menu" aria-expanded="false">

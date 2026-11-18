@@ -11,6 +11,7 @@ const zh = useTranslations('zh');
 <BaseLayout title="404 · Jerry Tsai" description={en('notFound.title')} lang="en" translatable={false} noindex>
   <Nav lang="en" variant="page" showLangSwitch={false} />
 
+  <main id="main">
   <section class="sec not-found" style="padding-top: calc(var(--nav-h) + 40px); min-height: 70vh;">
     <div class="container">
       <div class="sec-head">
@@ -31,6 +32,7 @@ const zh = useTranslations('zh');
       </p>
     </div>
   </section>
+  </main>
 
   <Footer lang="en" />
 </BaseLayout>
