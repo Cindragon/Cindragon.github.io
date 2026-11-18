@@ -79,6 +79,7 @@ export const zh = {
   'lang.switch': '切換成英文',
   'notFound.title': '找不到頁面',
   'blog.updated': '更新於',
+  'theme.toggle': '深色模式',
 
   'footer.crafted': '以 Astro & TypeScript 打造',
 } as const;

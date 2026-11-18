@@ -7,6 +7,7 @@
 - **個人作品集**：經歷、專案、技能與證照
 - **技術部落格**：系統設計、演算法、韌體開發等文章
 - **中英雙語**：英文版在 `/`，繁體中文版在 `/zh/`，兩個版本都在 build 時產生，搜尋引擎都能收錄
+- **深淺色模式**：預設跟著系統設定，也可以用導覽列的按鈕切換
 
 ## 技術棧
 
@@ -19,8 +20,9 @@
 | [satori](https://github.com/vercel/satori) + sharp | build 時為每篇文章產生分享預覽圖（Open Graph 標題卡片） |
 | `@astrojs/sitemap` / `@astrojs/rss` | sitemap（含中英 hreflang）與 RSS 訂閱 |
 | [Giscus](https://giscus.app) | 以 GitHub Discussions 為後端的留言區與表情回應 |
-| CSS Custom Properties | 全站主題變數（teal accent） |
-| Google Fonts | Open Sans、Noto Sans TC、IBM Plex Mono（只載入用到的字重） |
+| CSS Custom Properties | 全站主題變數（teal accent），深淺色模式共用同一組變數 |
+| Google Fonts | Open Sans、IBM Plex Mono（只載入用到的字重）；Noto Sans TC 只下載首頁大標三個字 |
+| 系統字體 | 中文內文使用系統字體（蘋方／微軟正黑體／Noto Sans CJK），避免下載約 1MB 的中文網頁字體 |
 
 ## 專案結構
 
@@ -117,6 +119,14 @@ seriesOrder: 6                  # 選填：在系列中的順序
 - **留言區**：[Giscus](https://giscus.app)，訪客用 GitHub 帳號留言或按表情回應，資料存在 GitHub Discussions
 - **分享預覽圖**：每篇文章自動產生 1200×630 的標題卡片
 - **RSS**：`/rss.xml`
+
+## 深淺色模式
+
+- 顏色全部定義在 `src/styles/global.css` 開頭的 CSS 變數；深色值寫在下方的 `prefers-color-scheme: dark` 與 `[data-theme="dark"]` 兩個區塊（內容相同），新增顏色時兩處都要加
+- 預設跟著系統設定；按過導覽列的切換按鈕後，選擇會存在 `localStorage`，並由 `<html data-theme>` 套用
+- `<head>` 裡的 inline script 會在畫面出現前套用主題，避免深色模式下先閃一下白色
+- 切換時會發出 `themechange` 事件：背景粒子與 Giscus 留言區會跟著換色
+- 程式碼區塊使用 Shiki 的 `github-light` / `github-dark` 雙主題
 
 ## 多語系
 

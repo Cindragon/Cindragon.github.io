@@ -79,6 +79,7 @@ export const en = {
   'lang.switch': 'Switch to Chinese',
   'notFound.title': 'Page not found',
   'blog.updated': 'Updated',
+  'theme.toggle': 'Dark mode',
 
   'footer.crafted': 'Crafted with Astro & TypeScript',
 } as const;

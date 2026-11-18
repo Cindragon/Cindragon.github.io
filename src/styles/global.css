@@ -31,6 +31,75 @@
   --font-mono:   'IBM Plex Mono', 'Courier New', monospace;
   --ease:        cubic-bezier(0.4, 0, 0.2, 1);
   --dur:         0.2s;
+
+  /* 原本寫死在各處的顏色，改成變數以便深色模式覆寫 */
+  --on-teal:     #ffffff;   /* teal 底上的文字 */
+  --hero-bg:     linear-gradient(135deg, #f8fcfd 0%, #eef7fa 50%, #f0f8fb 100%);
+  --green-bg:    rgba(0, 100, 50, 0.07);
+  --green-text:  #006432;
+  --green-border: rgba(0, 100, 50, 0.25);
+  --table-border: #cccccc;
+  --canvas-dot:  0, 133, 161;   /* 背景粒子的 RGB */
+  color-scheme: light;
+}
+
+/*
+ * 深色模式：
+ * - 預設跟著系統設定（prefers-color-scheme）
+ * - 使用者按過切換按鈕後，<html data-theme="light|dark"> 以使用者的選擇為準
+ * 兩個區塊的內容相同（為了支援較舊的瀏覽器，不使用 light-dark()）
+ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --teal:        #3cb8d4;
+    --teal-light:  #6fd0e6;
+    --teal-dim:    rgba(60, 184, 212, 0.12);
+    --teal-border: rgba(60, 184, 212, 0.35);
+    --teal-text:   #5cc6de;
+    --link:        #6cb4ff;
+    --bg:          #121518;
+    --bg-nav:      #1a1e22;
+    --bg-alt:      #171b1f;
+    --bg-card:     #1a1e22;
+    --text:        #e3e6e8;
+    --text-light:  #a3abb2;
+    --text-xlight: #6f7880;
+    --border:      #2a3036;
+    --border2:     #384047;
+    --on-teal:     #0d1114;
+    --hero-bg:     linear-gradient(135deg, #12191d 0%, #10181c 50%, #131a1e 100%);
+    --green-bg:    rgba(74, 200, 130, 0.12);
+    --green-text:  #6fd69c;
+    --green-border: rgba(74, 200, 130, 0.35);
+    --table-border: #384047;
+    --canvas-dot:  60, 184, 212;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --teal:        #3cb8d4;
+    --teal-light:  #6fd0e6;
+    --teal-dim:    rgba(60, 184, 212, 0.12);
+    --teal-border: rgba(60, 184, 212, 0.35);
+    --teal-text:   #5cc6de;
+    --link:        #6cb4ff;
+    --bg:          #121518;
+    --bg-nav:      #1a1e22;
+    --bg-alt:      #171b1f;
+    --bg-card:     #1a1e22;
+    --text:        #e3e6e8;
+    --text-light:  #a3abb2;
+    --text-xlight: #6f7880;
+    --border:      #2a3036;
+    --border2:     #384047;
+    --on-teal:     #0d1114;
+    --hero-bg:     linear-gradient(135deg, #12191d 0%, #10181c 50%, #131a1e 100%);
+    --green-bg:    rgba(74, 200, 130, 0.12);
+    --green-text:  #6fd69c;
+    --green-border: rgba(74, 200, 130, 0.35);
+    --table-border: #384047;
+    --canvas-dot:  60, 184, 212;
+    color-scheme: dark;
 }
 
 /* RESET & BASE */
@@ -56,8 +125,8 @@ a:hover, a:focus { color: var(--teal); }
 ul { list-style: none; }
 strong { font-weight: 700; color: var(--text); }
 
-::selection       { color: #fff; background: var(--teal); text-shadow: none; }
-::-moz-selection  { color: #fff; background: var(--teal); text-shadow: none; }
+::selection       { color: var(--on-teal); background: var(--teal); text-shadow: none; }
+::-moz-selection  { color: var(--on-teal); background: var(--teal); text-shadow: none; }
 :focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
 
 ::-webkit-scrollbar       { width: 5px; }
@@ -192,6 +261,41 @@ strong { font-weight: 700; color: var(--text); }
   background: var(--teal-dim);
 }
 
+/* 導覽列右側的按鈕群組（深淺色、語言、行動版選單） */
+.nav-actions {
+  display: flex;
+  align-items: center;
+}
+
+/* 深淺色切換按鈕：外觀與語言切換一致；淺色時顯示月亮、深色時顯示太陽 */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  margin-right: 8px;
+  color: var(--text);
+  background: transparent;
+  border: 1px solid var(--border2);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: color var(--dur), border-color var(--dur), background var(--dur);
+}
+.theme-toggle:hover {
+  color: var(--teal);
+  border-color: var(--teal);
+  background: var(--teal-dim);
+}
+.theme-toggle .icon-sun { display: none; }
+:root[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+:root[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-toggle .icon-sun { display: block; }
+  :root:not([data-theme="light"]) .theme-toggle .icon-moon { display: none; }
+}
+
 .nav-hamburger {
   display: none;
   flex-direction: column;
@@ -254,7 +358,7 @@ strong { font-weight: 700; color: var(--text); }
   z-index: 1;
   padding: calc(var(--nav-h) + 60px) 15px 60px;
   text-align: center;
-  background: linear-gradient(135deg, #f8fcfd 0%, #eef7fa 50%, #f0f8fb 100%);
+  background: var(--hero-bg);
   border-bottom: 1px solid var(--border);
 }
 
@@ -484,9 +588,9 @@ strong { font-weight: 700; color: var(--text); }
   border: 1px solid var(--teal-border);
 }
 .badge-edu {
-  background: rgba(0, 100, 50, 0.07);
-  color: #006432;
-  border: 1px solid rgba(0, 100, 50, 0.25);
+  background: var(--green-bg);
+  color: var(--green-text);
+  border: 1px solid var(--green-border);
 }
 
 .tl-date {
@@ -640,13 +744,13 @@ strong { font-weight: 700; color: var(--text); }
 .sk-tags span:hover {
   background: var(--teal);
   border-color: var(--teal);
-  color: #fff;
+  color: var(--on-teal);
 }
 
 .sk-tags.cert span { border-color: var(--teal-border); color: var(--teal); }
-.sk-tags.cert span:hover { background: var(--teal); color: #fff; }
+.sk-tags.cert span:hover { background: var(--teal); color: var(--on-teal); }
 .sk-tags.lang span { border-color: var(--teal-border); color: var(--teal); }
-.sk-tags.lang span:hover { background: var(--teal); color: #fff; }
+.sk-tags.lang span:hover { background: var(--teal); color: var(--on-teal); }
 
 /* BLOG PREVIEW (Homepage) */
 .blog-preview-grid {
@@ -732,7 +836,7 @@ strong { font-weight: 700; color: var(--text); }
 }
 .blog-view-all a:hover {
   background: var(--teal);
-  color: #fff;
+  color: var(--on-teal);
   border-color: var(--teal);
 }
 
@@ -800,7 +904,7 @@ strong { font-weight: 700; color: var(--text); }
 .blog-card-tags a:hover,
 .blog-tag-cloud a:hover {
   background: var(--teal);
-  color: #fff;
+  color: var(--on-teal);
 }
 
 /* 文章列表頁的標籤雲 */
@@ -1023,7 +1127,7 @@ strong { font-weight: 700; color: var(--text); }
 
 .blog-post-content th,
 .blog-post-content td {
-  border: 1px solid #ccc;
+  border: 1px solid var(--table-border);
   padding: 0.75rem;
 }
 
@@ -1064,7 +1168,7 @@ strong { font-weight: 700; color: var(--text); }
 }
 .contact-btn:hover {
   background: var(--teal);
-  color: #fff;
+  color: var(--on-teal);
   border-color: var(--teal);
 }
 .contact-btn svg { width: 14px; height: 14px; }
@@ -1152,5 +1256,25 @@ strong { font-weight: 700; color: var(--text); }
 .blog-tag-cloud a:hover,
 /* 原本 .sk-tags.cert span 的顏色寫在 hover 規則之後，滑過時變成 teal 底 teal 字看不見 */
 .sk-tags.cert span:hover {
-  color: #fff;
+  color: var(--on-teal);
+}
+
+/* ── 深色模式：文章圖片（多為白底圖表）稍微調暗 ───────────── */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .blog-post-content img { filter: brightness(0.9); }
+}
+:root[data-theme="dark"] .blog-post-content img { filter: brightness(0.9); }
+
+/* ── 深色模式：程式碼區塊改用 Shiki 的深色主題（見 astro.config.mjs 的 shikiConfig.themes） ── */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .astro-code,
+  :root:not([data-theme="light"]) .astro-code span {
+    color: var(--shiki-dark) !important;
+    background-color: var(--shiki-dark-bg) !important;
+  }
+}
+:root[data-theme="dark"] .astro-code,
+:root[data-theme="dark"] .astro-code span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
 }

@@ -26,7 +26,8 @@ export default defineConfig({
       rehypePlugins: [rehypeImageSizes],
     }),
     shikiConfig: {
-      theme: 'github-light',
+      // 淺色預設 github-light；深色模式由 global.css 切到 --shiki-dark 變數（github-dark）
+      themes: { light: 'github-light', dark: 'github-dark' },
     },
   },
 });
