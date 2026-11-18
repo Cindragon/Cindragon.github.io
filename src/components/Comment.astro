@@ -8,28 +8,50 @@ interface Props {
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 ---
-<section class="giscus-wrapper">
+<section class="giscus-wrapper" data-giscus-lang={HTML_LANG[lang] === 'zh-TW' ? 'zh-TW' : 'en'}>
   <h2 class="comment-title">{t('comment.title')}</h2>
   <div class="giscus"></div>
 </section>
 
-<script
-  is:inline
-  src="https://giscus.app/client.js"
-  data-repo="Cindragon/Cindragon.github.io"
-  data-repo-id="R_kgDOSuDYIw"
-  data-category="Announcements"
-  data-category-id="DIC_kwDOSuDYI84C-gM7"
-  data-mapping="pathname"
-  data-strict="0"
-  data-reactions-enabled="1"
-  data-emit-metadata="0"
-  data-input-position="bottom"
-  data-theme="light"
-  data-lang={HTML_LANG[lang] === 'zh-TW' ? 'zh-TW' : 'en'}
-  crossorigin="anonymous"
-  async
-></script>
+<!--
+  Giscus 留言區：載入時依目前的深淺色主題選擇配色；
+  使用者切換主題時（BaseLayout 發出的 themechange 事件），透過 postMessage 讓留言區即時換色。
+-->
+<script is:inline>
+  (function () {
+    var wrapper = document.querySelector('.giscus-wrapper');
+    if (!wrapper) return;
+    var giscusTheme = function (theme) { return theme === 'dark' ? 'dark' : 'light'; };
+    var current = document.documentElement.dataset.theme ||
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+
+    var s = document.createElement('script');
+    s.src = 'https://giscus.app/client.js';
+    s.async = true;
+    s.crossOrigin = 'anonymous';
+    var attrs = {
+      'data-repo': 'Cindragon/Cindragon.github.io',
+      'data-repo-id': 'R_kgDOSuDYIw',
+      'data-category': 'Announcements',
+      'data-category-id': 'DIC_kwDOSuDYI84C-gM7',
+      'data-mapping': 'pathname',
+      'data-strict': '0',
+      'data-reactions-enabled': '1',
+      'data-emit-metadata': '0',
+      'data-input-position': 'bottom',
+      'data-theme': giscusTheme(current),
+      'data-lang': wrapper.getAttribute('data-giscus-lang') || 'en',
+    };
+    for (var k in attrs) s.setAttribute(k, attrs[k]);
+    wrapper.appendChild(s);
+
+    window.addEventListener('themechange', function (e) {
+      var frame = document.querySelector('iframe.giscus-frame');
+      if (!frame || !frame.contentWindow) return;
+      frame.contentWindow.postMessage({ giscus: { setConfig: { theme: giscusTheme(e.detail) } } }, 'https://giscus.app');
+    });
+  })();
+</script>
 
 <style>
   .giscus-wrapper {

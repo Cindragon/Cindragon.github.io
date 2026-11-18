@@ -59,6 +59,18 @@ import '../styles/global.css';
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content={description} />
   <meta name="generator" content={Astro.generator} />
+  <!--
+    深淺色主題：在頁面畫出來之前就套用使用者選過的主題，避免先閃一下白色再變深色。
+    沒選過時不設定 data-theme，由 CSS 的 prefers-color-scheme 跟著系統。
+  -->
+  <script is:inline>
+    try {
+      var savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'light' || savedTheme === 'dark') document.documentElement.dataset.theme = savedTheme;
+    } catch (e) {}
+  </script>
+  <meta name="theme-color" content="#f5f5f5" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#1a1e22" media="(prefers-color-scheme: dark)" />
   {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonicalURL} />}
   {alternates.map((alt) => <link rel="alternate" hreflang={alt.hreflang} href={alt.href} />)}
   {alternates.length > 0 && <link rel="alternate" hreflang="x-default" href={alternates[0].href} />}
@@ -156,6 +168,14 @@ import '../styles/global.css';
       // 使用者開啟「減少動態效果」時只畫靜態背景，不跑動畫
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+      // 粒子顏色來自 CSS 變數 --canvas-dot（深淺色主題不同），切換主題時重新讀取
+      let dotRGB = '0, 133, 161';
+      const readDotColor = () => {
+        dotRGB = getComputedStyle(document.documentElement).getPropertyValue('--canvas-dot').trim() || dotRGB;
+        if (reduceMotion) draw();
+      };
+      window.addEventListener('themechange', readDotColor);
+
       function draw() {
         ctx!.clearRect(0, 0, canvas.width, canvas.height);
         for (const p of particles) {
@@ -170,7 +190,7 @@ import '../styles/global.css';
 
           ctx!.beginPath();
           ctx!.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          ctx!.fillStyle = `rgba(0, 133, 161, ${p.opacity * 0.5})`;
+          ctx!.fillStyle = `rgba(${dotRGB}, ${p.opacity * 0.5})`;
           ctx!.fill();
         }
         if (!reduceMotion) requestAnimationFrame(draw);
@@ -188,7 +208,8 @@ import '../styles/global.css';
 
       resize();
       createParticles();
-      draw();
+      readDotColor(); // 背景粒子在閒置時才啟動，錯過了第一次 themechange，這裡先讀一次
+      if (!reduceMotion) draw();
     }
 
     function initNav() {
@@ -286,8 +307,36 @@ import '../styles/global.css';
       els.forEach(el => observer.observe(el));
     }
 
+    /**
+     * 深淺色切換：
+     * - 沒按過按鈕：跟著系統設定（<html> 沒有 data-theme）
+     * - 按過：寫入 data-theme 與 localStorage（<head> 的 inline script 下次載入時會先套用）
+     * 主題改變時發出 themechange 事件，讓背景粒子、Giscus 留言區跟著換色
+     */
+    function initTheme() {
+      const html = document.documentElement;
+      const systemDark = window.matchMedia('(prefers-color-scheme: dark)');
+      const current = () => html.dataset.theme ?? (systemDark.matches ? 'dark' : 'light');
+      const toggle = document.getElementById('theme-toggle');
+
+      const sync = () => {
+        toggle?.setAttribute('aria-pressed', String(current() === 'dark'));
+        window.dispatchEvent(new CustomEvent('themechange', { detail: current() }));
+      };
+
+      toggle?.addEventListener('click', () => {
+        const next = current() === 'dark' ? 'light' : 'dark';
+        html.dataset.theme = next;
+        try { localStorage.setItem('theme', next); } catch {}
+        sync();
+      });
+      systemDark.addEventListener('change', sync);
+      sync();
+    }
+
     // 這是 module script，執行時 DOM 已解析完成；先處理語言偏好，需要導向時越早越好
     initLang();
+    initTheme();
     initNav();
     initReveal();
 

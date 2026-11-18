@@ -57,19 +57,27 @@ const switchHref = localizePath(stripLangPrefix(Astro.url.pathname), otherLang);
         </li>
       ))}
     </ul>
-    {showLangSwitch && (
-      <a
-        class="lang-toggle"
-        id="lang-toggle"
-        href={switchHref}
-        hreflang={HTML_LANG[otherLang]}
-        lang={HTML_LANG[otherLang]}
-        aria-label={`${LANG_LABEL[otherLang]} – ${t('lang.switch')}`}
-      >{LANG_LABEL[otherLang]}</a>
-    )}
-    <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle menu" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
+    <!-- 右側按鈕群組：nav-inner 用 space-between，包成一組才會一起靠右 -->
+    <div class="nav-actions">
+      <!-- 深淺色切換：aria-pressed 由 BaseLayout 的 initTheme() 依目前主題更新 -->
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false" aria-label={t('theme.toggle')}>
+        <svg class="icon-moon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+      {showLangSwitch && (
+        <a
+          class="lang-toggle"
+          id="lang-toggle"
+          href={switchHref}
+          hreflang={HTML_LANG[otherLang]}
+          lang={HTML_LANG[otherLang]}
+          aria-label={`${LANG_LABEL[otherLang]} – ${t('lang.switch')}`}
+        >{LANG_LABEL[otherLang]}</a>
+      )}
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </div>
 </nav>
 
