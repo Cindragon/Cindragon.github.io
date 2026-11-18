@@ -46,7 +46,10 @@ src/
     ├── posts.ts          # 取得文章、日期格式、閱讀時間、標籤、系列文章
     ├── og-image.ts       # 產生標題卡片
     └── rehype-image-sizes.mjs  # 設定文章圖片的 sizes
-scripts/publish-post.mjs  # Obsidian 筆記上架腳本
+scripts/
+├── publish-post.mjs      # Obsidian 筆記上架腳本
+├── check-i18n.mjs        # 翻譯 key 一致性檢查
+└── check-links.mjs       # build 後的站內連結檢查
 ```
 
 ## 指令
@@ -56,7 +59,9 @@ scripts/publish-post.mjs  # Obsidian 筆記上架腳本
 | `npm install` | 安裝依賴（Node.js 22.12 以上） |
 | `npm run dev` | 啟動開發伺服器 `localhost:4321` |
 | `npm run check` | TypeScript / Astro 型別檢查 |
+| `npm run check:i18n` | 檢查 `en.ts` / `zh.ts` 的翻譯 key 是否一致、有沒有空字串 |
 | `npm run build` | 建置靜態網站到 `./dist/`（產生預覽圖時需要連得到 Google Fonts） |
+| `npm run check:links` | 檢查 `dist/` 裡所有站內連結、圖片與錨點是否有效（需先 build） |
 | `npm run preview` | 本地預覽建置結果 |
 | `npm run publish -- "<筆記路徑>"` | 把 Obsidian 筆記上架成文章 |
 
@@ -122,7 +127,12 @@ seriesOrder: 6                  # 選填：在系列中的順序
 
 ## 部署與 CI
 
-- GitHub Actions（`.github/workflows/deploy.yml`）
-  - **Pull Request**：執行 `astro check` 與 `astro build`，不部署
-  - **push 到 `main`**：檢查、建置並部署到 GitHub Pages
+- GitHub Actions（`.github/workflows/deploy.yml`）依序執行：型別檢查 → 翻譯 key 檢查 → build → 站內連結檢查
+  - **Pull Request**：只跑檢查，不部署
+  - **push 到 `main`**：檢查全部通過後部署到 GitHub Pages
 - 開發流程：開分支 → 開 PR → 檢查通過後合併到 `main` → 自動部署
+- **Dependabot**（`.github/dependabot.yml`）：
+  - npm 套件：每週一早上 9 點（台灣時間）檢查，小版本與修補版本合成一個 PR，大版本各自一個 PR
+  - GitHub Actions：每月檢查一次
+  - Dependabot 的 PR 一樣會跑上面的檢查，通過後再合併；大版本更新請先看 changelog 的破壞性變更
+- 連結檢查會把同網域下其他 repo 的專案網站（例如 `/Leetcode-Practice-Grind-75/`）當成站外連結；新增這類連結時，記得加到 `scripts/check-links.mjs` 的 `OTHER_PROJECT_SITES`
