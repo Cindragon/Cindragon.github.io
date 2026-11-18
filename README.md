@@ -134,5 +134,6 @@ seriesOrder: 6                  # 選填：在系列中的順序
 - **Dependabot**（`.github/dependabot.yml`）：
   - npm 套件：每週一早上 9 點（台灣時間）檢查，小版本與修補版本合成一個 PR，大版本各自一個 PR
   - GitHub Actions：每月檢查一次
+  - 暫時略過 TypeScript 7（`@astrojs/check` 尚未支援）；等它支援後刪掉 `.github/dependabot.yml` 裡的 `ignore` 設定
   - Dependabot 的 PR 一樣會跑上面的檢查，通過後再合併；大版本更新請先看 changelog 的破壞性變更
 - 連結檢查會把同網域下其他 repo 的專案網站（例如 `/Leetcode-Practice-Grind-75/`）當成站外連結；新增這類連結時，記得加到 `scripts/check-links.mjs` 的 `OTHER_PROJECT_SITES`
