@@ -51,7 +51,9 @@ src/
 scripts/
 ├── publish-post.mjs      # Obsidian 筆記上架腳本
 ├── check-i18n.mjs        # 翻譯 key 一致性檢查
-└── check-links.mjs       # build 後的站內連結檢查
+├── check-links.mjs       # build 後的站內連結檢查
+└── gen-icons.mjs         # 重新產生網站圖示（favicon、apple-touch-icon），改設計時才需要跑
+public/                   # robots.txt、favicon.svg / .ico、apple-touch-icon.png
 ```
 
 ## 指令
