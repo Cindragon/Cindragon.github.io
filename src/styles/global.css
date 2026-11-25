@@ -1051,6 +1051,17 @@ strong { font-weight: 700; color: var(--text); }
   margin-bottom: 18px;
 }
 
+/*
+ * 內文左右對齊：只套在段落、清單、引言；標題、表格、程式碼維持靠左。
+ * hyphens: auto 讓英文長字可以斷字，避免左右對齊時字距被拉得太開（依 <html lang> 判斷語言）。
+ */
+.blog-post-content p,
+.blog-post-content li,
+.blog-post-content blockquote {
+  text-align: justify;
+  hyphens: auto;
+}
+
 .blog-post-content ul,
 .blog-post-content ol {
   margin-bottom: 18px;
